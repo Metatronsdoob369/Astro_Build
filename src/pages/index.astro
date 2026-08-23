@@ -1,16 +1,33 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Ticker from "../components/Ticker.astro";
+import Services from "../components/Services.astro";
+import Loop from "../components/Loop.astro";
+import CaseStudies from "../components/CaseStudies.astro";
+import Process from "../components/Process.astro";
+import Contact from "../components/Contact.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- 01 / CORE — the cold open: SYSTEMS + dormant chip -->
+  <Hero />
+
+  <!-- system status band -->
+  <Ticker />
+
+  <!-- 02 / SYSTEMS — web design · recursive AiO · custom AI -->
+  <Services />
+
+  <!-- 03 / RECURSION — the loop behind every AiO site -->
+  <Loop />
+
+  <!-- 04 / EXTERNAL NODES — deployed client systems -->
+  <CaseStudies />
+
+  <!-- 05 / PROTOCOL — engagement phases -->
+  <Process />
+
+  <!-- 06 / TRANSMIT — initialize -->
+  <Contact />
+</BaseLayout>

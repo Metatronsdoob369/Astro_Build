@@ -1,0 +1,310 @@
+---
+// [ 04 : EXTERNAL NODES ] — deployed client systems
+const projects = [
+  {
+    id: "oms-inventory",
+    title: "OMS INVENTORY & SCOUTER",
+    status: "[ NODE: ACTIVE | SECTOR: MEDICAL ]",
+    description:
+      "National inventory tracker and site-scouting system for a multi-state oral surgery group. Replaced fragmented spreadsheets across locations with one governed data architecture — live stock levels, transfer alerts, and geospatial scouting of prospective practice sites.",
+    tags: ["n8n Integration", "Data Consolidation", "Geospatial Analysis"],
+    metrics: [
+      { b: "37", s: "Locations unified" },
+      { b: "1", s: "Source of truth" },
+      { b: "0", s: "Lost stock records" },
+    ],
+  },
+  {
+    id: "drug-expiry",
+    title: "DRUG EXPIRY SYSTEM",
+    status: "[ NODE: ACTIVE | COMPLIANCE: STRICT ]",
+    description:
+      "Automated pharmaceutical tracking and expiry alerting for clinical inventory. Eliminates redundant manual logging, escalates expiring stock before it becomes a write-off, and maintains an audit log compliance officers actually enjoy reading.",
+    tags: ["Automated Alerts", "Audit Logging", "Healthcare Compliance"],
+    metrics: [
+      { b: "100%", s: "Lot coverage" },
+      { b: "90d", s: "Advance warnings" },
+      { b: "24/7", s: "Monitoring" },
+    ],
+  },
+  {
+    id: "perf-auditor",
+    title: "WEB PERFORMANCE AUDITOR",
+    status: "[ NODE: ACTIVE | SPEC: v0.9 ]",
+    description:
+      "A watchdog that never sleeps: crawls every page of a web estate on schedule, simulates real devices, catches Core Web Vitals regressions the moment they ship — and drafts the exact fix, not just the ticket. Deployed across multi-property publishers and e-commerce fleets.",
+    tags: ["Headless Fleet", "LLM Fix-Drafting", "CWV Regression Watch"],
+    metrics: [
+      { b: "44%", s: "LCP reduction" },
+      { b: "<24h", s: "Regression lifetime" },
+      { b: "∞", s: "Patience for jank" },
+    ],
+  },
+  {
+    id: "opsec-suite",
+    title: "REDTEAM OPSEC SUITE",
+    status: "[ NODE: ARMED | CLEARANCE: REQ ]",
+    description:
+      "Stacked custom tooling built from operator requests. Deployable chain for active reconnaissance and penetration testing — LLM-assisted recon agents that map surface area before an adversary does, with every action logged and governed.",
+    tags: ["LLM Agents", "Custom Infrastructure", "Security"],
+    metrics: [
+      { b: "SEC", s: "Sector: defensive" },
+      { b: "0", s: "Ungoverned actions" },
+      { b: "REQ", s: "Clearance to view" },
+    ],
+  },
+  {
+    id: "ue5-gen",
+    title: "UE5 AUTONOMOUS GEN",
+    status: "[ NODE: STAGING | ENGINE: UE5 ]",
+    description:
+      "An autonomous MCP loop that scans industry channels for market signals and drives Unreal Engine 5 rendering in response — generating industry-tier synthetic media triggered by real-world events. It grades its own output and auto-prunes anything below bar.",
+    tags: ["Unreal Engine 5", "MCP Loop", "Autonomous Content"],
+    metrics: [
+      { b: "UE5", s: "Render engine" },
+      { b: "30m", s: "Signal scan cycle" },
+      { b: "AUTO", s: "Quality pruning" },
+    ],
+  },
+];
+---
+
+<section class="section" id="nodes">
+  <div class="container">
+    <div class="sec-head copper" data-reveal>
+      <span class="idx">[ 04 : EXTERNAL NODES ]</span>
+      <span class="name">Workspace Gallery</span>
+    </div>
+    <p class="sec-lede" data-reveal>
+      Deployed systems, isolated instances, applied Cosine architecture.
+      <strong>Real products built for real clients</strong> — select a node to
+      inspect.
+    </p>
+
+    <div class="gallery" data-reveal>
+      <!-- Node selector -->
+      <div class="selector" role="tablist" aria-label="Select client system">
+        <div class="mono selector-label">Select instance:</div>
+        {projects.map((p, i) => (
+          <button
+            class="node-btn"
+            role="tab"
+            id={`tab-${p.id}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls={`panel-${p.id}`}
+            data-node={p.id}
+          >
+            <span class="node-title">{p.title}</span>
+            <span class="pulse-dot" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+
+      <!-- Display window -->
+      <div class="window scanlines panel" data-window>
+        <div class="window-head">
+          <span class="mono window-stat" data-w-stat>{projects[0].status}</span>
+          <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="window-body">
+          {projects.map((p, i) => (
+            <div
+              class="window-panel"
+              id={`panel-${p.id}`}
+              role="tabpanel"
+              aria-labelledby={`tab-${p.id}`}
+              data-panel={p.id}
+              data-status={p.status}
+              class:list={{ active: i === 0 }}
+            >
+              <div class="wp-paper">
+                <h3 class="wp-title">{p.title}</h3>
+                <p class="wp-body">{p.description}</p>
+              </div>
+
+              <div class="wp-metrics">
+                {p.metrics.map((m) => (
+                  <div class="metric">
+                    <b>{m.b}</b>
+                    <span>{m.s}</span>
+                  </div>
+                ))}
+              </div>
+
+              <ul class="tags">
+                {p.tags.map((t) => <li>{t}</li>)}
+              </ul>
+
+              <a class="btn wp-btn" href="#transmit">Request access log</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    display: flex;
+    gap: clamp(16px, 2vw, 28px);
+    align-items: stretch;
+  }
+
+  /* ── selector sidebar ── */
+  .selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 340px;
+    flex-shrink: 0;
+  }
+  .selector-label {
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 10px;
+    margin-bottom: 6px;
+  }
+
+  .node-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    text-align: left;
+    padding: 16px 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    background: var(--bg);
+    transition: border-color 0.25s ease, background 0.25s ease;
+  }
+  .node-btn .node-title {
+    font-family: var(--font-hero);
+    font-weight: 700;
+    font-size: 13.5px;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    transition: color 0.25s ease;
+  }
+  .node-btn .pulse-dot { opacity: 0; transition: opacity 0.3s ease; }
+  .node-btn:hover {
+    border-color: var(--mint-dim);
+    background: var(--layer-deep);
+  }
+  .node-btn:hover .node-title { color: var(--ink); }
+  .node-btn.active {
+    border-color: var(--line-strong);
+    background: var(--layer-elevated);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.05);
+  }
+  .node-btn.active .node-title { color: var(--ink); }
+  .node-btn.active .pulse-dot { opacity: 1; }
+
+  /* ── window ── */
+  .window {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 480px;
+  }
+  .window-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--line-soft);
+    background: var(--layer-elevated);
+  }
+  .window-stat { color: var(--copper); font-size: 10px; letter-spacing: 0.18em; }
+  .window-dots { display: flex; gap: 8px; }
+  .window-dots i {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--ghost);
+  }
+
+  .window-body { position: relative; flex: 1; }
+
+  .window-panel {
+    position: absolute;
+    inset: 0;
+    padding: clamp(24px, 3vw, 44px);
+    display: none;
+    flex-direction: column;
+    gap: 26px;
+    opacity: 0;
+    transform: scale(0.985);
+  }
+  .window-panel.active {
+    display: flex;
+    animation: wpin 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+  @keyframes wpin {
+    to { opacity: 1; transform: none; }
+  }
+
+  .wp-paper {
+    border: 1px solid var(--line-soft);
+    border-radius: 6px;
+    background: var(--bg);
+    padding: clamp(20px, 2.4vw, 30px);
+  }
+  .wp-title {
+    font-size: clamp(22px, 2.6vw, 32px);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    margin-bottom: 14px;
+  }
+  .wp-body {
+    color: var(--muted);
+    font-weight: 300;
+    font-size: 15px;
+    max-width: 68ch;
+  }
+
+  .wp-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    border-block: 1px solid var(--line-soft);
+    padding-block: 20px;
+  }
+
+  .wp-btn { align-self: flex-start; margin-top: auto; }
+
+  @media (max-width: 920px) {
+    .gallery { flex-direction: column; }
+    .selector { width: 100%; }
+    .window { min-height: 560px; }
+  }
+  @media (max-width: 560px) {
+    .wp-metrics { grid-template-columns: 1fr 1fr; }
+    .window-panel { padding: 20px; }
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>(".node-btn");
+  const panels = document.querySelectorAll<HTMLElement>(".window-panel");
+  const stat = document.querySelector<HTMLElement>("[data-w-stat]");
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      buttons.forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
+      panels.forEach((p) => p.classList.remove("active"));
+
+      btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      const target = document.getElementById(`panel-${btn.dataset.node}`);
+      target?.classList.add("active");
+      if (stat && target?.dataset.status) stat.textContent = target.dataset.status;
+    });
+  });
+</script>
