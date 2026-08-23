@@ -18,8 +18,8 @@
       <svg viewBox="0 0 800 400" class="chip" role="img">
         <defs>
           <linearGradient id="chipBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1a1a1a" />
-            <stop offset="100%" stop-color="#050505" />
+            <stop offset="0%" stop-color="#3a3f43" />
+            <stop offset="100%" stop-color="#23272a" />
           </linearGradient>
           <filter id="mintGlow" x="-40%" y="-40%" width="180%" height="180%">
             <feGaussianBlur stdDeviation="4" result="blur" />
@@ -33,24 +33,24 @@
 
         <!-- circuit traces: base + mint pulses -->
         <g class="traces">
-          <path d="M90 110 H210 V170 H280" fill="none" stroke="#232323" stroke-width="2" />
-          <path d="M60 250 H230 V225 H280" fill="none" stroke="#232323" stroke-width="2" />
-          <path d="M520 170 H590 V120 H710" fill="none" stroke="#232323" stroke-width="2" />
-          <path d="M520 235 H610 V290 H730" fill="none" stroke="#232323" stroke-width="2" />
-          <circle cx="90" cy="110" r="4" fill="#232323" />
-          <circle cx="60" cy="250" r="4" fill="#232323" />
-          <circle cx="710" cy="120" r="4" fill="#232323" />
-          <circle cx="730" cy="290" r="4" fill="#232323" />
+          <path d="M90 110 H210 V170 H280" fill="none" stroke="#4a5054" stroke-width="2" />
+          <path d="M60 250 H230 V225 H280" fill="none" stroke="#4a5054" stroke-width="2" />
+          <path d="M520 170 H590 V120 H710" fill="none" stroke="#4a5054" stroke-width="2" />
+          <path d="M520 235 H610 V290 H730" fill="none" stroke="#4a5054" stroke-width="2" />
+          <circle cx="90" cy="110" r="4" fill="#4a5054" />
+          <circle cx="60" cy="250" r="4" fill="#4a5054" />
+          <circle cx="710" cy="120" r="4" fill="#4a5054" />
+          <circle cx="730" cy="290" r="4" fill="#4a5054" />
         </g>
         <g class="pulse-traces">
-          <path class="ptrace" d="M90 110 H210 V170 H280" fill="none" stroke="var(--mint)" stroke-width="2" filter="url(#mintGlow)" />
-          <path class="ptrace p2" d="M60 250 H230 V225 H280" fill="none" stroke="var(--mint)" stroke-width="2" filter="url(#mintGlow)" />
-          <path class="ptrace p3" d="M520 170 H590 V120 H710" fill="none" stroke="var(--mint)" stroke-width="2" filter="url(#mintGlow)" />
-          <path class="ptrace p4" d="M520 235 H610 V290 H730" fill="none" stroke="var(--mint)" stroke-width="2" filter="url(#mintGlow)" />
+          <path class="ptrace" d="M90 110 H210 V170 H280" fill="none" stroke="var(--olive-bright)" stroke-width="2" filter="url(#mintGlow)" />
+          <path class="ptrace p2" d="M60 250 H230 V225 H280" fill="none" stroke="var(--olive-bright)" stroke-width="2" filter="url(#mintGlow)" />
+          <path class="ptrace p3" d="M520 170 H590 V120 H710" fill="none" stroke="var(--olive-bright)" stroke-width="2" filter="url(#mintGlow)" />
+          <path class="ptrace p4" d="M520 235 H610 V290 H730" fill="none" stroke="var(--olive-bright)" stroke-width="2" filter="url(#mintGlow)" />
         </g>
 
         <!-- chip pins -->
-        <g fill="#2c2c2c">
+        <g fill="#4a5054">
           <rect x="252" y="120" width="30" height="8" rx="2" />
           <rect x="252" y="160" width="30" height="8" rx="2" />
           <rect x="252" y="200" width="30" height="8" rx="2" />
@@ -68,28 +68,28 @@
         </g>
 
         <!-- chip body -->
-        <rect x="278" y="96" width="244" height="208" rx="16" fill="url(#chipBody)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5" />
+        <rect x="278" y="96" width="244" height="208" rx="16" fill="url(#chipBody)" stroke="rgba(255,255,255,0.16)" stroke-width="1.5" />
         <rect x="284" y="102" width="232" height="196" rx="12" fill="none" stroke="rgba(255,255,255,0.05)" />
 
         <!-- inner cavity -->
-        <rect x="306" y="124" width="188" height="128" rx="8" fill="#050505" stroke="rgba(255,255,255,0.07)" />
+        <rect x="306" y="124" width="188" height="128" rx="8" fill="#1d2124" stroke="rgba(255,255,255,0.07)" />
 
         <!-- the sine of life -->
         <path
           class="sine"
           d="M318 188 Q339 118 360 188 T402 188 T444 188 T482 188"
           fill="none"
-          stroke="var(--mint)"
+          stroke="var(--olive-bright)"
           stroke-width="3"
           stroke-linecap="round"
           filter="url(#sineGlow)"
         />
-        <circle class="sine-pulse" r="5" fill="var(--mint)" filter="url(#mintGlow)">
+        <circle class="sine-pulse" r="5" fill="var(--olive-bright)" filter="url(#mintGlow)">
           <animateMotion dur="5s" repeatCount="indefinite" path="M318 188 Q339 118 360 188 T402 188 T444 188 T482 188" />
         </circle>
 
         <!-- the copper plus -->
-        <path class="plus" d="M470 138 v18 M461 147 h18" stroke="var(--copper)" stroke-width="3" stroke-linecap="round" />
+        <path class="plus" d="M470 138 v18 M461 147 h18" stroke="var(--ember-bright)" stroke-width="3" stroke-linecap="round" />
 
         <!-- core label -->
         <text x="400" y="284" text-anchor="middle" class="chip-label">COS+ // CORE_NODE</text>
@@ -112,7 +112,8 @@
       COSINE+ AUTONOMOUS is an AI solutions company. We design precision
       websites, deploy <strong>recursive AiO systems</strong> that keep improving
       after launch, and build governed custom AI architectures for operations
-      that can&rsquo;t afford drift.
+      that can&rsquo;t afford drift. <strong>Tactical on the outside, warm in
+      the hand.</strong>
     </p>
 
     <div class="hero-cta">
@@ -157,7 +158,7 @@
     margin-bottom: 10px;
   }
   .corner-r { transition: color 1s ease; }
-  .hero.active .corner-r { color: var(--mint); }
+  .hero.active .corner-r { color: var(--olive); }
 
   .hero-h1 {
     font-size: clamp(58px, 12vw, 124px);
@@ -254,7 +255,8 @@
     padding: 9px 20px;
     border: 1px solid var(--line-soft);
     border-radius: 6px;
-    background: rgba(10, 10, 10, 0.6);
+    background: rgba(250, 248, 241, 0.8);
+    backdrop-filter: blur(6px);
     font-size: 13px;
     letter-spacing: 0.22em;
     opacity: 0;

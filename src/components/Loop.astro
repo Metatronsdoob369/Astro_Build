@@ -1,9 +1,9 @@
-<!-- [ 03 : RECURSION ] — the loop behind every Recursive AiO website -->
+<!-- [ 04 : RECURSION ] — the loop behind every Recursive AiO website -->
 <section class="section" id="recursion">
   <div class="container loop-grid">
     <div class="loop-copy">
       <div class="sec-head copper" data-reveal>
-        <span class="idx">[ 03 : RECURSION ]</span>
+        <span class="idx">[ 04 : RECURSION ]</span>
         <span class="name">The Loop</span>
       </div>
       <p class="sec-lede" data-reveal>
@@ -41,9 +41,9 @@
 
     <div class="loop-diagram" data-reveal aria-hidden="true">
       <svg class="ring" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5" stroke-dasharray="3 2.4" />
-        <circle class="ring-flow" cx="50" cy="50" r="46" fill="none" stroke="var(--mint)" stroke-width="0.6" stroke-dasharray="6 283" stroke-linecap="round" />
-        <path d="M50 6 l-2.6 4.5 h5.2 z" fill="var(--mint)" class="ring-arrow" />
+        <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(46,50,54,0.22)" stroke-width="0.5" stroke-dasharray="3 2.4" />
+        <circle class="ring-flow" cx="50" cy="50" r="46" fill="none" stroke="var(--olive)" stroke-width="0.6" stroke-dasharray="6 283" stroke-linecap="round" />
+        <path d="M50 6 l-2.6 4.5 h5.2 z" fill="var(--olive)" class="ring-arrow" />
       </svg>
 
       <div class="loop-core">
@@ -91,7 +91,7 @@
     align-items: baseline;
   }
   .steps p { color: var(--muted); font-size: 14.5px; font-weight: 300; }
-  .step-num { color: var(--copper); font-size: 11px; letter-spacing: 0.2em; }
+  .step-num { color: var(--ember); font-size: 11px; letter-spacing: 0.2em; }
 
   .gov {
     list-style: none;
@@ -137,10 +137,10 @@
     width: 38%;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: 1px solid var(--mint-dim);
-    background: rgba(10, 10, 10, 0.85);
+    border: 1px solid var(--olive-dim);
+    background: rgba(250, 248, 241, 0.94);
     backdrop-filter: blur(8px);
-    box-shadow: 0 0 40px rgba(142, 255, 166, 0.08);
+    box-shadow: 0 0 40px rgba(91, 101, 80, 0.18);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -154,7 +154,7 @@
     font-size: clamp(28px, 4vw, 44px);
     color: var(--ink);
   }
-  .core-sym span { color: var(--copper); }
+  .core-sym span { color: var(--ember); }
   .core-label { font-size: 9px; letter-spacing: 0.24em; color: var(--muted); line-height: 1.7; }
 
   .loop-node {
@@ -170,7 +170,7 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     animation: nodefloat 5s ease-in-out infinite;
   }
-  .loop-node:hover { border-color: var(--mint); box-shadow: 0 0 20px rgba(142, 255, 166, 0.15); }
+  .loop-node:hover { border-color: var(--olive); box-shadow: 0 0 20px rgba(142, 255, 166, 0.15); }
   .n1 { top: 0; left: 50%; transform: translateX(-50%); }
   .n2 { top: 50%; right: 0; transform: translateY(-50%); animation-delay: 1.2s; }
   .n3 { bottom: 0; left: 50%; transform: translateX(-50%); animation-delay: 2.4s; }
@@ -178,7 +178,7 @@
 
   @keyframes nodefloat {
     0%, 100% { box-shadow: 0 0 0 rgba(142, 255, 166, 0); }
-    50% { box-shadow: 0 0 24px -6px rgba(142, 255, 166, 0.25); }
+    50% { box-shadow: 0 0 24px -6px rgba(91, 101, 80, 0.35); }
   }
 
   @media (max-width: 960px) {

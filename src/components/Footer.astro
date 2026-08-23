@@ -8,8 +8,8 @@ const year = new Date().getFullYear();
       <div class="f-brand">
         <a class="plaque-face" href="#top" aria-label="Back to top">
           <svg viewBox="0 0 48 22" width="42" height="20" aria-hidden="true">
-            <path d="M2 14 Q8 2 14 14 T26 14 T38 14" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round"></path>
-            <path d="M43 3 v8 M39 7 h8" stroke="var(--copper)" stroke-width="1.6" stroke-linecap="round"></path>
+            <path d="M2 14 Q8 2 14 14 T26 14 T38 14" fill="none" stroke="var(--olive-bright)" stroke-width="2.2" stroke-linecap="round"></path>
+            <path d="M43 3 v8 M39 7 h8" stroke="var(--ember-bright)" stroke-width="1.6" stroke-linecap="round"></path>
           </svg>
           <span class="f-name">COSINE<em>+</em></span>
         </a>
@@ -22,15 +22,16 @@ const year = new Date().getFullYear();
       <nav class="f-col" aria-label="Footer — sections">
         <h4 class="mono">Traverse</h4>
         <a href="#core">01 / Core</a>
-        <a href="#systems">02 / Systems</a>
-        <a href="#recursion">03 / Recursion</a>
-        <a href="#nodes">04 / External Nodes</a>
-        <a href="#protocol">05 / Protocol</a>
+        <a href="#design">02 / Design Dept.</a>
+        <a href="#systems">03 / Systems</a>
+        <a href="#recursion">04 / Recursion</a>
+        <a href="#nodes">05 / External Nodes</a>
+        <a href="#protocol">06 / Protocol</a>
       </nav>
 
       <nav class="f-col" aria-label="Footer — capabilities">
         <h4 class="mono">Systems</h4>
-        <a href="#systems">Web Design</a>
+        <a href="#design">Web Design</a>
         <a href="#recursion">Recursive AiO Websites</a>
         <a href="#systems">Custom AI Solutions</a>
         <a href="#nodes">Client Gallery</a>
@@ -56,7 +57,7 @@ const year = new Date().getFullYear();
 <style>
   .footer {
     border-top: 1px solid var(--line-soft);
-    background: rgba(5, 5, 5, 0.3);
+    background: rgba(46, 50, 54, 0.04);
     backdrop-filter: blur(6px);
     padding-top: clamp(48px, 6vw, 80px);
     position: relative;
@@ -75,7 +76,7 @@ const year = new Date().getFullYear();
     align-items: center;
     gap: 12px;
     border: 1px solid var(--line-soft);
-    background: #050505;
+    background: #1d2124;
     padding: 10px 16px;
     box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
     margin-bottom: 18px;
@@ -85,8 +86,9 @@ const year = new Date().getFullYear();
     font-weight: 800;
     font-size: 16px;
     letter-spacing: 0.14em;
+    color: #f2efe7;
   }
-  .f-name em { color: var(--copper); font-style: normal; }
+  .f-name em { color: var(--ember-bright); font-style: normal; }
 
   .f-tagline {
     color: var(--muted);
@@ -97,7 +99,7 @@ const year = new Date().getFullYear();
 
   .f-col { display: flex; flex-direction: column; gap: 11px; }
   .f-col h4 {
-    color: var(--mint);
+    color: var(--ember);
     font-weight: 500;
     font-size: 10px;
     letter-spacing: 0.24em;
@@ -109,7 +111,7 @@ const year = new Date().getFullYear();
     transition: color 0.15s ease;
     width: fit-content;
   }
-  .f-col a:hover { color: var(--mint); }
+  .f-col a:hover { color: var(--olive); }
 
   .f-meta { color: var(--faint); font-size: 9.5px; letter-spacing: 0.18em; }
 

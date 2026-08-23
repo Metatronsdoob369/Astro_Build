@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="6" fill="#050505"/>
-  <rect x="0.5" y="0.5" width="63" height="63" rx="5.5" fill="none" stroke="rgba(255,255,255,0.08)"/>
+  <rect width="64" height="64" rx="8" fill="#f2efe7"/>
+  <rect x="0.5" y="0.5" width="63" height="63" rx="7.5" fill="none" stroke="rgba(46,50,54,0.18)"/>
   <!-- chip pins -->
-  <g stroke="#2a2a2a" stroke-width="2">
-    <path d="M12 6 v5 M22 6 v5 M32 6 v5 M42 6 v5 M52 6 v5"/>
-    <path d="M12 53 v5 M22 53 v5 M32 53 v5 M42 53 v5 M52 53 v5"/>
+  <g stroke="#9a958a" stroke-width="2">
+    <path d="M12 7 v4 M22 7 v4 M32 7 v4 M42 7 v4 M52 7 v4"/>
+    <path d="M12 53 v4 M22 53 v4 M32 53 v4 M42 53 v4 M52 53 v4"/>
   </g>
-  <!-- sine of life -->
-  <path d="M10 32 Q19 10 28 32 T46 32 T54 32" fill="none" stroke="#8effa6" stroke-width="3.4" stroke-linecap="round"/>
-  <!-- copper plus -->
-  <path d="M48 14 v8 M44 18 h8" stroke="#ff8c42" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- sine of life, ember -->
+  <path d="M10 32 Q19 10 28 32 T46 32 T54 32" fill="none" stroke="#c2551f" stroke-width="3.6" stroke-linecap="round"/>
+  <!-- ranger plus -->
+  <path d="M48 14 v8 M44 18 h8" stroke="#5b6550" stroke-width="2.6" stroke-linecap="round"/>
 </svg>

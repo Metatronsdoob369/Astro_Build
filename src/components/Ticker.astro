@@ -23,7 +23,7 @@
     position: relative;
     z-index: 1;
     border-block: 1px solid var(--line-soft);
-    background: var(--layer-deep);
+    background: var(--graphite);
     overflow: hidden;
     padding-block: 12px;
   }
@@ -43,11 +43,11 @@
     font-size: 10px;
     letter-spacing: 0.26em;
     text-transform: uppercase;
-    color: var(--faint);
+    color: rgba(242, 239, 231, 0.5);
     white-space: nowrap;
   }
-  .ticker-group span:nth-child(3n + 1) { color: var(--mint); opacity: 0.55; }
-  .ticker-group span:nth-child(3n) { color: var(--copper); opacity: 0.55; }
+  .ticker-group span:nth-child(3n + 1) { color: var(--olive-bright); opacity: 0.85; }
+  .ticker-group span:nth-child(3n) { color: var(--ember-bright); opacity: 0.85; }
 
   @keyframes scroll {
     to { transform: translateX(-50%); }
