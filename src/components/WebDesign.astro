@@ -1,35 +1,54 @@
 ---
-// [ 02 : DESIGN DEPT. ] — proof of craft. A studio pushing web design
-// has to show web design. Exhibit A is the site you're reading.
+// [ 02 : DESIGN DEPT. ] — proof of craft, bento-style.
+// Wide landscape cells so the product inside is actually presentable.
 const builds = [
   {
+    id: "drift",
     img: "/mockups/drift-coffee.jpg",
     alt: "Drift & Ember — specialty coffee roastery website",
     client: "DRIFT & EMBER",
+    url: "driftandember.com",
     sector: "Specialty coffee roastery",
     stat: "[ BUILD: 2025 | ASTRO + HEADLESS ]",
     result: "+61% online orders in 90 days",
     stack: ["Sub-second loads", "Headless CMS", "0 templates"],
+    span: "s4",
+    featured: true,
   },
   {
-    img: "/mockups/sunbelt-field.jpg",
-    alt: "Sunbelt Field Services — HVAC & electrical contractor website",
-    client: "SUNBELT FIELD SERVICES",
-    sector: "HVAC & electrical contractor",
-    stat: "[ BUILD: 2025 | ASTRO + N8N INTAKE ]",
-    result: "9-minute emergency intake, start to dispatch",
-    stack: ["Tactical utility", "n8n intake flows", "Local SEO"],
-  },
-  {
+    id: "meridian",
     img: "/mockups/meridian-arch.jpg",
     alt: "Meridian A+D — architecture studio portfolio website",
     client: "MERIDIAN A+D",
+    url: "meridianad.com",
     sector: "Architecture studio",
-    stat: "[ BUILD: 2024 | ASTRO + SANITY ]",
+    stat: "[ BUILD: 2024 ]",
     result: "Portfolio updates 3× faster, no developer",
-    stack: ["Editorial grid", "Sanity backend", "Print-grade type"],
+    span: "s2",
+  },
+  {
+    id: "sunbelt",
+    img: "/mockups/sunbelt-field.jpg",
+    alt: "Sunbelt Field Services — HVAC & electrical contractor website",
+    client: "SUNBELT FIELD SERVICES",
+    url: "sunbeltfield.com",
+    sector: "HVAC & electrical contractor",
+    stat: "[ BUILD: 2025 ]",
+    result: "9-minute emergency intake, start to dispatch",
+    span: "s2",
   },
 ];
+
+const platform = {
+  img: "/mockups/grid-dashboard.jpg",
+  alt: "Photorealistic dark telemetry dashboard with topographic map, charts and radar widget",
+  client: "NORDIC GRID",
+  url: "app.nordicgrid.io",
+  stat: "[ PLATFORM: TELEMETRY · NOT A WEBSITE ]",
+  result:
+    "When the client\u2019s problem isn\u2019t a website, we build the room the data lives in: topographic grid maps, live telemetry, forecast models, and operator alerts — engineered to be read at 3 a.m.",
+  stack: ["Realtime telemetry", "Forecast models", "Operator alerting", "DesignOps handoff"],
+};
 
 const swatches = [
   { name: "BONE", hex: "#F2EFE7" },
@@ -53,66 +72,55 @@ const swatches = [
       Exhibit A: this page.
     </p>
 
-    <div class="builds">
+    <!-- ── the bento ── -->
+    <div class="bento">
       {builds.map((b, i) => (
-        <article class="panel build" data-reveal data-reveal-delay={String(i)}>
+        <article class:list={["panel", "cell", b.span, { featured: b.featured }]} data-reveal data-reveal-delay={String(Math.min(i, 2))}>
           <div class="browser">
             <div class="browser-bar">
               <span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="b-url mono">{b.client.toLowerCase().replace(/[^a-z0-9]+/g, "")}.com</span>
+              <span class="b-url mono">{b.url}</span>
               <span class="b-live mono"><span class="pulse-dot"></span> LIVE</span>
             </div>
             <div class="browser-view">
-              <img src={b.img} alt={b.alt} loading="lazy" width="1024" height="1024" />
+              <img src={b.img} alt={b.alt} loading="lazy" width="1408" height="768" />
             </div>
           </div>
 
-          <div class="build-spec">
-            <div class="spec-row">
+          <div class="spec">
+            <div class="spec-top">
               <h3 class="b-client">{b.client}</h3>
               <span class="stat-chip">{b.stat}</span>
             </div>
             <p class="b-sector mono">{b.sector}</p>
             <p class="b-result">{b.result}</p>
-            <ul class="tags">
-              {b.stack.map((s) => <li>{s}</li>)}
-            </ul>
+            {b.stack && <ul class="tags"><li>{b.stack[0]}</li><li>{b.stack[1]}</li><li>{b.stack[2]}</li></ul>}
           </div>
         </article>
       ))}
-    </div>
 
-    <!-- platform build — custom AI solutions, not a website -->
-    <article class="panel platform" data-reveal>
-      <div class="platform-media">
-        <img
-          src="/mockups/grid-dashboard.jpg"
-          alt="Photorealistic dark telemetry dashboard with topographic map, charts and radar widget"
-          loading="lazy"
-          width="1024"
-          height="1024"
-        />
-        <span class="b-live mono platform-badge"><span class="pulse-dot"></span> LIVE</span>
-      </div>
-      <div class="platform-copy">
-        <div class="spec-row">
-          <h3 class="b-client">NORDIC GRID</h3>
-          <span class="stat-chip">[ PLATFORM: TELEMETRY · NOT A WEBSITE ]</span>
+      <!-- platform build — wide anchor cell -->
+      <article class="panel cell s4 platform" data-reveal>
+        <div class="platform-media">
+          <div class="browser-bar">
+            <span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="b-url mono">{platform.url}</span>
+            <span class="b-live mono"><span class="pulse-dot"></span> LIVE</span>
+          </div>
+          <div class="browser-view">
+            <img src={platform.img} alt={platform.alt} loading="lazy" width="1024" height="1024" />
+          </div>
         </div>
-        <p class="b-sector mono">Utility-scale energy monitoring · custom AI solution</p>
-        <p class="b-result">
-          When the client&rsquo;s problem isn&rsquo;t a website, we build the room
-          the data lives in: topographic grid maps, live telemetry, forecast
-          models, and operator alerts — engineered to be read at 3 a.m.
-        </p>
-        <ul class="tags">
-          <li>Realtime telemetry</li>
-          <li>Forecast models</li>
-          <li>Operator alerting</li>
-          <li>DesignOps handoff</li>
-        </ul>
-      </div>
-    </article>
+        <div class="platform-copy">
+          <h3 class="b-client">{platform.client}</h3>
+          <p class="b-sector mono">Utility-scale energy monitoring · custom AI solution</p>
+          <p class="b-result">{platform.result}</p>
+          <ul class="tags">
+            {platform.stack.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      </article>
+    </div>
 
     <!-- the system itself, on display -->
     <div class="panel specimen" data-reveal>
@@ -140,23 +148,39 @@ const swatches = [
 </section>
 
 <style>
-  .builds {
+  /* ── the bento: wide rectangles, product first ── */
+  .bento {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: clamp(20px, 2.6vw, 34px);
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(16px, 2vw, 24px);
     margin-bottom: clamp(28px, 3.5vw, 44px);
+    align-items: stretch;
   }
 
-  .build { display: flex; flex-direction: column; }
+  .cell {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .s4 { grid-column: span 4; }
+  .s2 { grid-column: span 2; }
 
-  .browser { border-bottom: 1px solid var(--line-soft); }
+  .browser {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+
   .browser-bar {
     display: flex;
     align-items: center;
     gap: 14px;
-    padding: 10px 14px;
+    padding: 9px 14px;
     background: var(--layer-elevated);
     border-bottom: 1px solid var(--line-soft);
+    flex-shrink: 0;
   }
   .b-dots { display: flex; gap: 6px; }
   .b-dots i {
@@ -176,6 +200,7 @@ const swatches = [
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    min-width: 0;
   }
   .b-live {
     display: inline-flex;
@@ -186,17 +211,29 @@ const swatches = [
     color: var(--olive);
   }
 
-  .browser-view { overflow: hidden; }
+  .browser-view {
+    flex: 1;
+    min-height: 230px;
+    overflow: hidden;
+    position: relative;
+  }
   .browser-view img {
     width: 100%;
-    aspect-ratio: 4 / 3.1;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-  .build:hover .browser-view img { transform: scale(1.04); }
+  .cell:hover .browser-view img { transform: scale(1.035); }
 
-  .build-spec { padding: 22px 24px 26px; display: flex; flex-direction: column; gap: 8px; }
-  .spec-row {
+  /* spec strip — compact, horizontal */
+  .spec {
+    padding: 15px 18px 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .spec-top {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
@@ -204,62 +241,44 @@ const swatches = [
     flex-wrap: wrap;
   }
   .b-client {
-    font-size: 18px;
+    font-size: 16.5px;
     font-weight: 800;
     letter-spacing: 0.06em;
   }
-  .b-sector { color: var(--ember); font-size: 10px; letter-spacing: 0.2em; }
+  .b-sector { color: var(--ember); font-size: 9.5px; letter-spacing: 0.2em; }
   .b-result {
     color: var(--muted);
-    font-size: 14.5px;
-    font-weight: 400;
-    margin-bottom: 10px;
+    font-size: 13.5px;
   }
+  .featured .tags { margin-top: 7px; }
+  .s2 .b-result { font-size: 13px; }
+  .s2 .stat-chip { display: none; }
+
+  /* platform — wide anchor, media left / copy right */
+  .platform {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+  }
+  .platform-media {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    border-right: 1px solid var(--line-soft);
+  }
+  .platform-media .browser-view { min-height: 250px; }
+  .platform-copy {
+    padding: clamp(20px, 2.4vw, 32px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    min-width: 0;
+  }
+  .platform-copy .b-result { font-size: 14px; }
+  .platform-copy .tags { margin-top: 6px; }
 
   /* ── the spec card ── */
-  .platform {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 0;
-      margin-bottom: clamp(28px, 3.5vw, 44px);
-    }
-    .platform-media {
-      position: relative;
-      overflow: hidden;
-      border-right: 1px solid var(--line-soft);
-      min-height: 280px;
-    }
-    .platform-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .platform:hover .platform-media img { transform: scale(1.03); }
-    .platform-badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      background: rgba(34, 38, 42, 0.82);
-      border: 1px solid rgba(250, 248, 241, 0.15);
-      border-radius: 3px;
-      padding: 6px 12px;
-    }
-    .platform-copy {
-      padding: clamp(24px, 3vw, 40px);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      justify-content: center;
-    }
-
-    @media (max-width: 860px) {
-      .platform { grid-template-columns: 1fr; }
-      .platform-media { border-right: none; border-bottom: 1px solid var(--line-soft); }
-    }
-
-    .specimen {
+  .specimen {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: clamp(24px, 3vw, 44px);
@@ -314,9 +333,17 @@ const swatches = [
     letter-spacing: 0.22em;
   }
 
-  @media (max-width: 980px) {
-    .builds { grid-template-columns: 1fr; max-width: 620px; margin-inline: auto; }
+  /* ── responsive ── */
+  @media (max-width: 1020px) {
+    .s4 { grid-column: span 6; }
+    .s2 { grid-column: span 3; }
+    .platform { grid-template-columns: 1fr; }
+    .platform-media { border-right: none; border-bottom: 1px solid var(--line-soft); }
     .specimen { grid-template-columns: 1fr; }
     .spec-type { border-left: none; border-top: 1px dashed var(--line); padding-left: 0; padding-top: 24px; }
+  }
+  @media (max-width: 620px) {
+    .s2 { grid-column: span 6; }
+    .browser-view { min-height: 200px; }
   }
 </style>
