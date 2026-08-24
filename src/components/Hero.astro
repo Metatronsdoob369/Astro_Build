@@ -1,13 +1,20 @@
+---
+import TopoField from "./TopoField.astro";
+---
+
 <!-- ── The Cold Open ──────────────────────────────────────────
      Load:   "SYSTEMS" + dormant chip
      Scroll: chip activates → "with a SINE of LIFE." rises ──>
 ────────────────────────────────────────────────────────────── -->
 <section class="hero" id="core">
+    <div class="hero-topo" aria-hidden="true">
+      <TopoField seed={11} w={1440} h={900} cols={88} rows={54} levels={8} opacity={0.26} indexOpacity={0.4} preserve="xMidYMid slice" />
+    </div>
   <div class="container hero-inner">
     <!-- status corners -->
     <div class="corners mono" aria-hidden="true">
-      <span class="corner-l">[ 01 : CORE ]</span>
-      <span class="corner-r" data-state>DORMANT</span>
+      <span class="corner-l">[ 01 : CORE ]<i class="coord">33°31′N 86°48′W — GRID EMSJ</i></span>
+      <span class="corner-r" data-state>DORMANT<i class="coord">ELEV +142M</i></span>
     </div>
 
     <!-- Line 1 — always visible -->
@@ -146,6 +153,7 @@
     align-items: center;
     text-align: center;
     position: relative;
+    z-index: 1;
   }
 
   .corners {
@@ -156,6 +164,29 @@
     letter-spacing: 0.4em;
     color: var(--ghost);
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .corner-l, .corner-r {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .corner-r { text-align: right; }
+  .coord {
+    font-style: normal;
+    font-size: 8.5px;
+    letter-spacing: 0.26em;
+    color: var(--faint);
+  }
+
+  .hero-topo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, transparent 18%, black 72%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 42%, transparent 18%, black 72%);
+    opacity: 0.85;
   }
   .corner-r { transition: color 1s ease; }
   .hero.active .corner-r { color: var(--olive); }

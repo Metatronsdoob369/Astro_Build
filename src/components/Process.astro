@@ -3,21 +3,25 @@ const steps = [
   {
     num: "01",
     title: "SCOPE",
+    brg: "BRG 042°",
     body: "One week of discovery against your actual stack — not a deck. Ends in a fixed quote and a written scope you can hold us to.",
   },
   {
     num: "02",
     title: "PROTOTYPE",
+    brg: "BRG 131°",
     body: "Working software in 14 days. The prototype runs on real data behind a flag, so decisions get made on evidence instead of slides.",
   },
   {
     num: "03",
     title: "SHIP",
+    brg: "BRG 222°",
     body: "Production deployment, monitored and documented. Handover is optional — most clients keep the node on our watch instead.",
   },
   {
     num: "04",
     title: "RECURSE",
+    brg: "BRG 311°",
     body: "Post-launch, the loop keeps running. Deltas compound weekly and your asset appreciates instead of decaying.",
   },
 ];
@@ -38,7 +42,10 @@ const steps = [
       {steps.map((s, i) => (
         <li class="panel step" data-reveal data-reveal-delay={String(i)}>
           <span class="step-num">{s.num}</span>
-          <h3 class="step-title">{s.title}</h3>
+          <div class="step-head">
+            <h3 class="step-title">{s.title}</h3>
+            <span class="step-brg mono">{s.brg}</span>
+          </div>
           <p class="step-body">{s.body}</p>
           {i < steps.length - 1 && <span class="step-arrow mono" aria-hidden="true">-&gt;</span>}
         </li>
@@ -76,14 +83,26 @@ const steps = [
     -webkit-text-stroke-color: var(--ember);
   }
 
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
   .step-title {
     font-size: 19px;
     font-weight: 800;
     letter-spacing: 0.12em;
-    margin-bottom: 10px;
     border-bottom: 1px solid var(--olive-dim);
     display: inline-block;
     padding-bottom: 8px;
+  }
+  .step-brg {
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    white-space: nowrap;
   }
 
   .step-body {

@@ -1,3 +1,7 @@
+---
+import TopoField from "./TopoField.astro";
+---
+
 <!-- [ 04 : RECURSION ] — the loop behind every Recursive AiO website -->
 <section class="section" id="recursion">
   <div class="container loop-grid">
@@ -40,6 +44,14 @@
     </div>
 
     <div class="loop-diagram" data-reveal aria-hidden="true">
+      <div class="loop-topo">
+        <TopoField seed={4} w={640} h={640} cols={40} rows={40} levels={7} opacity={0.3} indexOpacity={0.42} preserve="xMidYMid slice" />
+      </div>
+      <span class="grid-tag mono">GRID EMSJ — 1:24K</span>
+      <span class="brg b1 mono">042°</span>
+      <span class="brg b2 mono">131°</span>
+      <span class="brg b3 mono">222°</span>
+      <span class="brg b4 mono">311°</span>
       <svg class="ring" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(46,50,54,0.22)" stroke-width="0.5" stroke-dasharray="3 2.4" />
         <circle class="ring-flow" cx="50" cy="50" r="46" fill="none" stroke="var(--olive)" stroke-width="0.6" stroke-dasharray="6 283" stroke-linecap="round" />
@@ -118,6 +130,40 @@
     width: 100%;
     margin-inline: auto;
   }
+
+  .loop-topo {
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image: radial-gradient(circle, black 55%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle, black 55%, transparent 78%);
+  }
+
+  .grid-tag {
+    position: absolute;
+    top: -26px;
+    right: 0;
+    font-size: 8.5px;
+    letter-spacing: 0.22em;
+    color: var(--faint);
+  }
+  .brg {
+    position: absolute;
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    background: var(--bg);
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    padding: 2px 7px;
+    z-index: 2;
+  }
+  .b1 { top: 21%; left: 18%; }
+  .b2 { top: 21%; right: 18%; }
+  .b3 { bottom: 21%; right: 18%; }
+  .b4 { bottom: 21%; left: 18%; }
 
   .ring {
     position: absolute;

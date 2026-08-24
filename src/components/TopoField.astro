@@ -1,0 +1,138 @@
+---
+// TopoField — deterministic topographic contour lines via marching squares
+// over a seeded heightfield. Renders inline SVG; pure build-time math.
+interface Props {
+  seed?: number;
+  w?: number;
+  h?: number;
+  levels?: number;
+  cols?: number;
+  rows?: number;
+  color?: string;
+  indexColor?: string;
+  opacity?: number;
+  indexOpacity?: number;
+  indexEvery?: number;
+  preserve?: string;
+  class?: string;
+}
+
+const {
+  seed = 7,
+  w = 1440,
+  h = 520,
+  levels = 7,
+  cols = 84,
+  rows = 46,
+  color = "#b7a48a",
+  indexColor = "#9c8666",
+  opacity = 0.34,
+  indexOpacity = 0.5,
+  indexEvery = 3,
+  preserve = "xMidYMid slice",
+  class: cls = "",
+} = Astro.props;
+
+function mulberry32(a: number) {
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const rand = mulberry32(seed * 1000 + 17);
+const peaks = Array.from({ length: 6 }, () => ({
+  x: rand() * w,
+  y: rand() * h,
+  a: 0.7 + rand() * 0.8,
+  s: 90 + rand() * 240,
+}));
+
+const field = (x: number, y: number) => {
+  let v = 0;
+  for (const p of peaks) {
+    const dx = x - p.x;
+    const dy = y - p.y;
+    v += p.a * Math.exp(-(dx * dx + dy * dy) / (2 * p.s * p.s * 0.4));
+  }
+  return v + 0.06 * Math.sin(x * 0.007 + seed) * Math.cos(y * 0.009 - seed);
+};
+
+const dx = w / cols;
+const dy = h / rows;
+const paths: string[][] = Array.from({ length: levels }, () => []);
+
+const lerp = (
+  x1: number, y1: number, v1: number,
+  x2: number, y2: number, v2: number,
+  t: number
+): [number, number] => {
+  const k = (t - v1) / (v2 - v1 || 1e-9);
+  return [x1 + (x2 - x1) * k, y1 + (y2 - y1) * k];
+};
+
+const min = 0.18;
+const max = 1.35;
+const r1 = (n: number) => n.toFixed(1);
+
+for (let li = 0; li < levels; li++) {
+  const t = min + ((max - min) * (li + 0.5)) / levels;
+  const out = paths[li];
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      const x = i * dx;
+      const y = j * dy;
+      const tl = field(x, y);
+      const tr = field(x + dx, y);
+      const br = field(x + dx, y + dy);
+      const bl = field(x, y + dy);
+      const bits =
+        (tl > t ? 8 : 0) | (tr > t ? 4 : 0) | (br > t ? 2 : 0) | (bl > t ? 1 : 0);
+      if (bits === 0 || bits === 15) continue;
+
+      const top = () => lerp(x, y, tl, x + dx, y, tr, t);
+      const right = () => lerp(x + dx, y, tr, x + dx, y + dy, br, t);
+      const bottom = () => lerp(x, y + dy, bl, x + dx, y + dy, br, t);
+      const left = () => lerp(x, y, tl, x, y + dy, bl, t);
+      const seg = (a: [number, number], b: [number, number]) =>
+        out.push(`M${r1(a[0])} ${r1(a[1])}L${r1(b[0])} ${r1(b[1])}`);
+
+      switch (bits) {
+        case 1: case 14: seg(left(), bottom()); break;
+        case 2: case 13: seg(bottom(), right()); break;
+        case 3: case 12: seg(left(), right()); break;
+        case 4: case 11: seg(top(), right()); break;
+        case 6: case 9: seg(top(), bottom()); break;
+        case 7: case 8: seg(top(), left()); break;
+        case 5: seg(top(), left()); seg(bottom(), right()); break;
+        case 10: seg(top(), right()); seg(bottom(), left()); break;
+      }
+    }
+  }
+}
+
+const levelPaths = paths.map((segs, li) => ({
+  d: segs.join(""),
+  index: li % indexEvery === indexEvery - 1,
+}));
+---
+
+<svg class:list={["topo", cls]} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio={preserve} aria-hidden="true">
+  {levelPaths.map((p) => (
+    <path
+      d={p.d}
+      fill="none"
+      stroke={p.index ? indexColor : color}
+      stroke-width={p.index ? 1.1 : 0.7}
+      opacity={p.index ? indexOpacity : opacity}
+      stroke-linecap="round"
+    />
+  ))}
+</svg>
+
+<style>
+  .topo { display: block; width: 100%; height: 100%; }
+</style>

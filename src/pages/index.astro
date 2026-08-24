@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import Ticker from "../components/Ticker.astro";
 import WebDesign from "../components/WebDesign.astro";
 import Services from "../components/Services.astro";
+import TopoBand from "../components/TopoBand.astro";
 import Loop from "../components/Loop.astro";
 import CaseStudies from "../components/CaseStudies.astro";
 import Process from "../components/Process.astro";
@@ -23,15 +24,31 @@ import Contact from "../components/Contact.astro";
   <!-- 03 / SYSTEMS — web design · recursive AiO · custom AI -->
   <Services />
 
-  <!-- 03 / RECURSION — the loop behind every AiO site -->
+  <!-- topo survey divider — the loop as a field route -->
+  <TopoBand seed={21} kicker="[ SURVEY ROUTE — LEG 04 : THE LOOP ]" note="ELEV +412M" />
+
+  <!-- 04 / RECURSION — the loop behind every AiO site -->
   <Loop />
 
-  <!-- 04 / EXTERNAL NODES — deployed client systems -->
+  <!-- 05 / EXTERNAL NODES — deployed client systems -->
   <CaseStudies />
 
-  <!-- 05 / PROTOCOL — engagement phases -->
+  <!-- 06 / PROTOCOL — engagement phases -->
   <Process />
 
-  <!-- 06 / TRANSMIT — initialize -->
+  <!-- final approach — topo divider into transmit -->
+  <TopoBand
+    seed={47}
+    kicker="[ FINAL APPROACH — LEG 07 : TRANSMIT ]"
+    note="HOLDING CLEARED"
+    waypoints={[
+      { x: 220, y: 200, label: "WP-01 · SAY HELLO", below: true },
+      { x: 720, y: 130, label: "WP-02 · SCOPE WEEK" },
+      { x: 1180, y: 200, label: "WP-03 · SHIP IT", live: true },
+    ]}
+    route="M220 200 C 400 200 540 130 720 130 S 1000 200 1180 200"
+  />
+
+  <!-- 07 / TRANSMIT — initialize -->
   <Contact />
 </BaseLayout>
