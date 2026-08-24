@@ -1,13 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig } from 'astro/config';
 
-// COSINE+ AUTONOMOUS — Astro build
-export default defineConfig({
-  site: "https://cosineplus.ai",
-  server: {
-    host: true,
-    port: 4321,
-    // allow the sandbox preview proxy host (and any subdomain of e2b.app)
-    allowedHosts: [".e2b.app", "localhost"],
-  },
-});
+// https://astro.build/config
+export default defineConfig({});
