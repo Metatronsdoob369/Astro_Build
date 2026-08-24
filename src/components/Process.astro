@@ -1,0 +1,136 @@
+---
+const steps = [
+  {
+    num: "01",
+    title: "SCOPE",
+    brg: "BRG 042°",
+    body: "One week of discovery against your actual stack — not a deck. Ends in a fixed quote and a written scope you can hold us to.",
+  },
+  {
+    num: "02",
+    title: "PROTOTYPE",
+    brg: "BRG 131°",
+    body: "Working software in 14 days. The prototype runs on real data behind a flag, so decisions get made on evidence instead of slides.",
+  },
+  {
+    num: "03",
+    title: "SHIP",
+    brg: "BRG 222°",
+    body: "Production deployment, monitored and documented. Handover is optional — most clients keep the node on our watch instead.",
+  },
+  {
+    num: "04",
+    title: "RECURSE",
+    brg: "BRG 311°",
+    body: "Post-launch, the loop keeps running. Deltas compound weekly and your asset appreciates instead of decaying.",
+  },
+];
+---
+
+<section class="section" id="protocol">
+  <div class="container">
+    <div class="sec-head" data-reveal>
+      <span class="idx">[ 06 : PROTOCOL ]</span>
+      <span class="name">Engagement Protocol</span>
+    </div>
+    <p class="sec-lede" data-reveal>
+      Four phases. No discovery theater, no surprise invoices, no
+      ship-and-vanish.
+    </p>
+
+    <ol class="steps">
+      {steps.map((s, i) => (
+        <li class="panel step" data-reveal data-reveal-delay={String(i)}>
+          <span class="step-num">{s.num}</span>
+          <div class="step-head">
+            <h3 class="step-title">{s.title}</h3>
+            <span class="step-brg mono">{s.brg}</span>
+          </div>
+          <p class="step-body">{s.body}</p>
+          {i < steps.length - 1 && <span class="step-arrow mono" aria-hidden="true">-&gt;</span>}
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(14px, 1.8vw, 22px);
+  }
+
+  .step {
+    padding: clamp(22px, 2.4vw, 30px);
+    padding-top: 34px;
+  }
+
+  .step-num {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-family: var(--font-hero);
+    font-weight: 800;
+    font-size: 30px;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--ghost);
+    transition: color 0.3s ease, -webkit-text-stroke-color 0.3s ease;
+  }
+  .step:hover .step-num {
+    color: var(--ember);
+    -webkit-text-stroke-color: var(--ember);
+  }
+
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .step-title {
+    font-size: 19px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    border-bottom: 1px solid var(--olive-dim);
+    display: inline-block;
+    padding-bottom: 8px;
+  }
+  .step-brg {
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: var(--faint);
+    white-space: nowrap;
+  }
+
+  .step-body {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 300;
+  }
+
+  .step-arrow {
+    display: none;
+  }
+
+  @media (min-width: 961px) {
+    .step-arrow {
+      display: block;
+      position: absolute;
+      top: 26px;
+      left: calc(100% + 2px);
+      color: var(--ghost);
+      z-index: 2;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .steps { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>

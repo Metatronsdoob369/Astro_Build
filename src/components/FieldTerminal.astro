@@ -1,0 +1,323 @@
+---
+// FieldTerminal — photoreal hardware reference + live telemetry HUD.
+// The VR-dashboard feel, grounded: real gear on a real table, and the
+// dashboard is genuinely running (counters, radar, pulse, delta feed).
+---
+
+<div class="ft" data-reveal>
+  <div class="ft-media">
+    <img
+      src="/mockups/field-terminal.jpg"
+      alt="Rugged COS+ field terminal on a coffee shop table, screen showing a topographic telemetry HUD"
+      loading="lazy"
+      width="1024"
+      height="1024"
+    />
+    <span class="ft-corner c1" aria-hidden="true"></span>
+    <span class="ft-corner c2" aria-hidden="true"></span>
+    <span class="ft-corner c3" aria-hidden="true"></span>
+    <span class="ft-corner c4" aria-hidden="true"></span>
+    <div class="ft-cap mono">[ EXHIBIT B — COS+ FIELD TERMINAL · HARDWARE REFERENCE ]</div>
+  </div>
+
+  <div class="ft-hud" aria-hidden="true">
+    <div class="hud-head mono">
+      <span class="hud-title"><span class="pulse-dot"></span> LIVE TELEMETRY</span>
+      <span class="hud-clock" data-clock>00:00:00Z</span>
+    </div>
+
+    <div class="hud-stats">
+      <div class="hstat">
+        <b data-count="cycles">12,847</b>
+        <span>LOOP CYCLES</span>
+      </div>
+      <div class="hstat">
+        <b data-count="deltas">312</b>
+        <span>DELTAS SHIPPED</span>
+      </div>
+      <div class="hstat">
+        <b data-count="visitors">27</b>
+        <span>VISITORS NOW</span>
+      </div>
+    </div>
+
+    <div class="hud-mid">
+      <svg class="radar" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="56" fill="none" stroke="rgba(250,248,241,0.14)" stroke-width="1" />
+        <circle cx="60" cy="60" r="37" fill="none" stroke="rgba(250,248,241,0.1)" stroke-width="1" />
+        <circle cx="60" cy="60" r="18" fill="none" stroke="rgba(250,248,241,0.1)" stroke-width="1" />
+        <path d="M60 4 V116 M4 60 H116" stroke="rgba(250,248,241,0.08)" stroke-width="1" />
+        <g class="sweep">
+          <path d="M60 60 L60 4 A56 56 0 0 1 95 17 Z" fill="rgba(163,177,138,0.28)" />
+          <line x1="60" y1="60" x2="60" y2="4" stroke="var(--olive-bright)" stroke-width="1.4" />
+        </g>
+        <circle class="blip b1" cx="88" cy="42" r="3" fill="var(--ember-bright)" />
+        <circle class="blip b2" cx="42" cy="84" r="2.4" fill="var(--olive-bright)" />
+        <circle class="blip b3" cx="70" cy="66" r="2" fill="var(--olive-bright)" />
+        <text x="60" y="14" class="radar-t" text-anchor="middle">000</text>
+        <text x="108" y="64" class="radar-t" text-anchor="middle">090</text>
+        <text x="60" y="114" class="radar-t" text-anchor="middle">180</text>
+        <text x="12" y="64" class="radar-t" text-anchor="middle">270</text>
+      </svg>
+
+      <div class="pulse-wrap">
+        <div class="pulse-track">
+          <div class="pulse-strip">
+            <svg viewBox="0 0 600 80" preserveAspectRatio="none">
+              <path d="M0 40 Q25 8 50 40 T100 40 T150 40 T200 40 T250 40 T300 40 T350 40 T400 40 T450 40 T500 40 T550 40 T600 40" fill="none" stroke="var(--olive-bright)" stroke-width="2" />
+            </svg>
+            <svg viewBox="0 0 600 80" preserveAspectRatio="none">
+              <path d="M0 40 Q25 8 50 40 T100 40 T150 40 T200 40 T250 40 T300 40 T350 40 T400 40 T450 40 T500 40 T550 40 T600 40" fill="none" stroke="var(--olive-bright)" stroke-width="2" />
+            </svg>
+          </div>
+        </div>
+        <div class="pulse-label mono">SYS PULSE — <span class="em">SINE OF LIFE</span> · 62 BPM</div>
+        <div class="delta-feed mono" data-feed>Δ hero headline v4 → +4.2% CTR · SHIPPED ✓</div>
+      </div>
+    </div>
+
+    <div class="hud-foot mono">NODE: COS-CORE-01 · UPLINK STABLE · DRIFT: NONE</div>
+  </div>
+</div>
+
+<style>
+  .ft {
+    margin-top: clamp(48px, 6vw, 84px);
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: clamp(18px, 2.4vw, 30px);
+    align-items: stretch;
+  }
+
+  /* ── photoreal exhibit ── */
+  .ft-media {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 48px -30px rgba(46, 50, 54, 0.55);
+  }
+  .ft-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4 / 3.4;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .ft:hover .ft-media img { transform: scale(1.03); }
+
+  .ft-corner {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--ember);
+    opacity: 0.9;
+  }
+  .c1 { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .c2 { top: 10px; right: 10px; border-left: none; border-bottom: none; }
+  .c3 { bottom: 10px; left: 10px; border-right: none; border-top: none; }
+  .c4 { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+  .ft-cap {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: #faf8f1;
+    background: rgba(34, 38, 42, 0.78);
+    border: 1px solid rgba(250, 248, 241, 0.14);
+    border-radius: 3px;
+    padding: 5px 12px;
+    white-space: nowrap;
+  }
+
+  /* ── live HUD — e-ink on graphite ── */
+  .ft-hud {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: linear-gradient(160deg, #262b2f, #1d2124);
+    border: 1px solid rgba(250, 248, 241, 0.12);
+    border-radius: 8px;
+    padding: clamp(18px, 2.2vw, 28px);
+    box-shadow: inset 0 1px 0 rgba(250, 248, 241, 0.06), 0 24px 48px -30px rgba(0, 0, 0, 0.7);
+    position: relative;
+    overflow: hidden;
+  }
+  .ft-hud::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.16) 50%);
+    background-size: 100% 4px;
+    opacity: 0.3;
+  }
+
+  .hud-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: rgba(250, 248, 241, 0.6);
+    border-bottom: 1px solid rgba(250, 248, 241, 0.1);
+    padding-bottom: 12px;
+  }
+  .hud-title { display: inline-flex; align-items: center; gap: 9px; color: var(--olive-bright); }
+  .hud-clock { font-variant-numeric: tabular-nums; }
+
+  .hud-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .hstat b {
+    display: block;
+    font-family: var(--font-hero);
+    font-weight: 800;
+    font-size: clamp(20px, 2.2vw, 27px);
+    color: #faf8f1;
+    text-shadow: 0 0 12px rgba(163, 177, 138, 0.35);
+    font-variant-numeric: tabular-nums;
+  }
+  .hstat span {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    color: rgba(250, 248, 241, 0.4);
+  }
+
+  .hud-mid {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex: 1;
+  }
+
+  .radar { width: clamp(96px, 30%, 128px); flex-shrink: 0; }
+  .radar-t {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    fill: rgba(250, 248, 241, 0.35);
+    letter-spacing: 0.1em;
+  }
+  .sweep { transform-origin: 60px 60px; animation: spin 4.2s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .blip { animation: blipfade 4.2s ease-out infinite; }
+  .b2 { animation-delay: 1.4s; }
+  .b3 { animation-delay: 2.8s; }
+  @keyframes blipfade {
+    0% { opacity: 0; }
+    8% { opacity: 1; }
+    60%, 100% { opacity: 0.12; }
+  }
+
+  .pulse-wrap { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+  .pulse-track {
+    overflow: hidden;
+    border: 1px solid rgba(250, 248, 241, 0.1);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.25);
+  }
+  .pulse-strip {
+    display: flex;
+    width: max-content;
+    animation: slide 7s linear infinite;
+  }
+  .pulse-strip svg { width: 300px; height: 64px; flex-shrink: 0; }
+  @keyframes slide { to { transform: translateX(-300px); } }
+
+  .pulse-label {
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    color: rgba(250, 248, 241, 0.45);
+  }
+  .pulse-label .em { color: var(--ember-bright); }
+
+  .delta-feed {
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--olive-bright);
+    background: rgba(163, 177, 138, 0.07);
+    border: 1px dashed rgba(163, 177, 138, 0.25);
+    border-radius: 3px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: opacity 0.3s ease;
+  }
+  .delta-feed.flash { opacity: 0.25; }
+
+  .hud-foot {
+    font-size: 8.5px;
+    letter-spacing: 0.2em;
+    color: rgba(250, 248, 241, 0.35);
+    border-top: 1px solid rgba(250, 248, 241, 0.1);
+    padding-top: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .ft { grid-template-columns: 1fr; }
+    .ft-media img { aspect-ratio: 16 / 10; }
+  }
+  @media (max-width: 520px) {
+    .hud-mid { flex-direction: column; align-items: stretch; }
+    .radar { width: 110px; margin-inline: auto; }
+  }
+</style>
+
+<script>
+  const clock = document.querySelector("[data-clock]");
+  const tickClock = () => {
+    if (clock) clock.textContent = new Date().toISOString().slice(11, 19) + "Z";
+  };
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  const state = { cycles: 12847, deltas: 312, visitors: 27 };
+  const fmt = (n: number) => n.toLocaleString("en-US");
+  const bind = (key: keyof typeof state) => {
+    const el = document.querySelector<HTMLElement>(`[data-count="${key}"]`);
+    if (el) el.textContent = fmt(state[key]);
+  };
+  const paint = () => (["cycles", "deltas", "visitors"] as const).forEach(bind);
+
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    setInterval(() => {
+      state.cycles += 1;
+      paint();
+    }, 4000);
+    setInterval(() => {
+      state.visitors = Math.max(18, Math.min(34, state.visitors + (Math.random() > 0.5 ? 1 : -1)));
+      paint();
+    }, 2400);
+    setInterval(() => {
+      state.deltas += 1;
+      paint();
+    }, 34000);
+  }
+
+  const feed = document.querySelector("[data-feed]");
+  const lines = [
+    "Δ hero headline v4 → +4.2% CTR · SHIPPED ✓",
+    "Δ pricing order → +2.9% CVR · SHIPPED ✓",
+    "Δ hero art direction v2 → +6.1% scroll depth ✓",
+    "Δ intake form: −2 fields → +11% completions ✓",
+    "Δ nav labels → −0.8s time-to-contact ✓",
+  ];
+  let fi = 0;
+  setInterval(() => {
+    if (!feed) return;
+    feed.classList.add("flash");
+    setTimeout(() => {
+      fi = (fi + 1) % lines.length;
+      feed.textContent = lines[fi];
+      feed.classList.remove("flash");
+    }, 300);
+  }, 5000);
+</script>
