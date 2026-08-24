@@ -1,0 +1,140 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a class="plaque-face" href="#top" aria-label="Back to top">
+          <svg viewBox="0 0 48 22" width="42" height="20" aria-hidden="true">
+            <path d="M2 14 Q8 2 14 14 T26 14 T38 14" fill="none" stroke="var(--olive-bright)" stroke-width="2.2" stroke-linecap="round"></path>
+            <path d="M43 3 v8 M39 7 h8" stroke="var(--ember-bright)" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+          <span class="f-name">COSINE<em>+</em></span>
+        </a>
+        <p class="f-tagline">
+          Systems, with a sine of life.<br />
+          Web design &middot; Recursive AiO websites &middot; Custom AI solutions.
+        </p>
+      </div>
+
+      <nav class="f-col" aria-label="Footer — sections">
+        <h4 class="mono">Traverse</h4>
+        <a href="#core">01 / Core</a>
+        <a href="#design">02 / Design Dept.</a>
+        <a href="#systems">03 / Systems</a>
+        <a href="#recursion">04 / Recursion</a>
+        <a href="#nodes">05 / External Nodes</a>
+        <a href="#protocol">06 / Protocol</a>
+      </nav>
+
+      <nav class="f-col" aria-label="Footer — capabilities">
+        <h4 class="mono">Systems</h4>
+        <a href="#design">Web Design</a>
+        <a href="#recursion">Recursive AiO Websites</a>
+        <a href="#systems">Custom AI Solutions</a>
+        <a href="#nodes">Client Gallery</a>
+      </nav>
+
+      <div class="f-col">
+        <h4 class="mono">Transmit</h4>
+        <a href="mailto:hello@cosineplus.ai">hello@cosineplus.ai</a>
+        <a href="#transmit">Initialize a build</a>
+        <p class="f-meta mono">[ MEDIAN REPLY: 3H 12M ]</p>
+        <p class="f-meta mono">[ BHM, AL — GLOBAL OPS ]</p>
+      </div>
+    </div>
+
+    <div class="f-bar mono">
+      <span>[ END OF SYSTEM SEQUENCE ]</span>
+      <span>&copy; {year} COSINE+ AUTONOMOUS. GOVERNED. AUTONOMOUS. ALIVE.</span>
+      <span>THIS SITE RECURSES TOO — v4.7.2/&infin;</span>
+      <span>QUAD: BIRMINGHAM EAST — 1:24K</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line-soft);
+    background: rgba(46, 50, 54, 0.04);
+    backdrop-filter: blur(6px);
+    padding-top: clamp(48px, 6vw, 80px);
+    position: relative;
+    z-index: 1;
+  }
+
+  .f-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    gap: clamp(28px, 4vw, 56px);
+    padding-bottom: clamp(40px, 5vw, 64px);
+  }
+
+  .plaque-face {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line-soft);
+    background: #1d2124;
+    padding: 10px 16px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+    margin-bottom: 18px;
+  }
+  .f-name {
+    font-family: var(--font-hero);
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.14em;
+    color: #f2efe7;
+  }
+  .f-name em { color: var(--ember-bright); font-style: normal; }
+
+  .f-tagline {
+    color: var(--muted);
+    font-size: 13.5px;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  .f-col { display: flex; flex-direction: column; gap: 11px; }
+  .f-col h4 {
+    color: var(--ember);
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    margin-bottom: 6px;
+  }
+  .f-col a {
+    color: var(--muted);
+    font-size: 13.5px;
+    transition: color 0.15s ease;
+    width: fit-content;
+  }
+  .f-col a:hover { color: var(--olive); }
+
+  .f-meta { color: var(--faint); font-size: 9.5px; letter-spacing: 0.18em; }
+
+  .f-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line-soft);
+    padding: 22px 0;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+  }
+
+  @media (max-width: 860px) {
+    .f-grid { grid-template-columns: 1fr 1fr; }
+    .f-brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 480px) {
+    .f-grid { grid-template-columns: 1fr; }
+    .f-bar { flex-direction: column; text-align: center; }
+  }
+</style>

@@ -1,0 +1,121 @@
+<!-- [ 07 : TRANSMIT ] — initialize -->
+<section class="section" id="transmit">
+  <div class="container transmit">
+    <div class="sec-head copper transmit-head" data-reveal>
+      <span class="idx">[ 07 : TRANSMIT ]</span>
+      <span class="name">Initialize</span>
+    </div>
+
+    <div class="t-photo" data-reveal>
+      <img
+        src="/mockups/operator-hud.jpg"
+        alt="Operator in a tactical vest at a coffee shop, viewing floating topographic HUD panels"
+        loading="lazy"
+        width="1024"
+        height="1024"
+      />
+      <span class="t-photo-cap mono">[ FIELD OPS — A COFFEE SHOP NEAR YOU ]</span>
+    </div>
+
+    <h2 class="t-title" data-reveal>
+      Tell us what should be running<br />
+      <em>while you sleep.</em>
+    </h2>
+
+    <p class="t-sub" data-reveal>
+      A website that improves itself. A workflow that stops needing you.
+      A system your competitors can&rsquo;t buy off a shelf. Start the
+      conversation — we&rsquo;ll scope it in one week, fixed.
+    </p>
+
+    <div class="t-actions" data-reveal>
+      <a class="btn btn-primary" href="mailto:hello@cosineplus.ai">hello@cosineplus.ai</a>
+      <a class="btn" href="#nodes">Review the gallery first</a>
+    </div>
+
+    <div class="t-meta mono" data-reveal>
+      <span><i class="pulse-dot"></i> MEDIAN REPLY: 3H 12M</span>
+      <span>[ BIRMINGHAM, AL — OPERATING EVERYWHERE ]</span>
+      <span>[ GOVERNED. AUTONOMOUS. ALIVE. ]</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .transmit {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .transmit-head { border-left-color: var(--ember); margin-inline: auto; }
+
+  .t-photo {
+      position: relative;
+      width: min(680px, 100%);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 48px -30px rgba(46, 50, 54, 0.55);
+      margin-bottom: clamp(32px, 4vw, 52px);
+    }
+    .t-photo img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+    .t-photo-cap {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 8.5px;
+      letter-spacing: 0.2em;
+      color: #faf8f1;
+      background: rgba(34, 38, 42, 0.78);
+      border: 1px solid rgba(250, 248, 241, 0.14);
+      border-radius: 3px;
+      padding: 5px 12px;
+      white-space: nowrap;
+    }
+
+    .t-title {
+    font-size: clamp(34px, 6vw, 64px);
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .t-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ember);
+  }
+
+  .t-sub {
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 56ch;
+    font-size: clamp(15px, 1.7vw, 17px);
+    margin-bottom: 38px;
+  }
+
+  .t-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .t-meta {
+    display: flex;
+    gap: clamp(18px, 4vw, 44px);
+    flex-wrap: wrap;
+    justify-content: center;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+  .t-meta span { display: inline-flex; align-items: center; gap: 10px; }
+</style>
