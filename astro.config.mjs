@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 
 // COSINE+ AUTONOMOUS — Astro build
 export default defineConfig({
-  site: "https://cosineplus.ai",
+  site: "https://cosineautonomous.com",
   server: {
     host: true,
     port: 4321,
