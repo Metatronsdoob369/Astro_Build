@@ -1,38 +1,38 @@
 /* ============================================================
    COSINE+ AUTONOMOUS — global design system
-   "Tactical vest at a coffee shop": bone paper, ranger green,
-   coyote tan, graphite ink, one burnt-ember accent.
-   Open, warm, engineered. Governed. Autonomous. Alive.
+   Spatial glass over matte charcoal. Contours are the ground.
+   Charcoal / slate / stone / ash / silver. Sage catch-light.
+   Ember only on the ask. Governed. Autonomous. Alive.
    ============================================================ */
 
 :root {
-  /* Color System — Bone Paper / Field Tones */
-  --bg: #f2efe7;            /* bone paper */
-  --bg-raised: #faf8f1;     /* panel paper */
-  --layer-deep: #f7f4ec;    /* card surface */
-  --layer-elevated: #ede9dc;/* window heads, wells */
-  --layer-high: #e3ded0;    /* pressed wells */
-  --graphite: #2e3236;      /* hardware / dark band */
+  /* Color System — charcoal night, matte veneer */
+  --bg: #0e0e10;            /* charcoal */
+  --bg-raised: rgba(22, 22, 24, 0.58);
+  --layer-deep: #121214;
+  --layer-elevated: #1a1a1c;
+  --layer-high: #242428;
+  --graphite: #0a0a0b;
 
-  /* Accents — field tones, never neon */
-  --olive: #5b6550;         /* ranger green — rewards, alive states */
-  --olive-bright: #a3b18a;  /* sage — olive on dark surfaces */
-  --olive-dim: rgba(91, 101, 80, 0.32);
-  --ember: #c2551f;         /* burnt ember — sparing accents ONLY */
-  --ember-bright: #e06a31;  /* ember on dark surfaces */
-  --ember-dim: rgba(194, 85, 31, 0.32);
-  --tan: #b7a48a;           /* coyote tan — structural warmth */
+  /* Accents — catch light, never neon */
+  --olive: #a3b18a;         /* sage — alive states */
+  --olive-bright: #c5d4b0;
+  --olive-dim: rgba(163, 177, 138, 0.28);
+  --ember: #e06a31;         /* burnt ember — CTA only */
+  --ember-bright: #ff8c42;
+  --ember-dim: rgba(224, 106, 49, 0.32);
+  --tan: #8a867c;           /* ash */
 
   /* Lines */
-  --line: rgba(46, 50, 54, 0.16);
-  --line-soft: rgba(46, 50, 54, 0.1);
-  --line-strong: rgba(46, 50, 54, 0.34);
+  --line: rgba(236, 236, 232, 0.12);
+  --line-soft: rgba(236, 236, 232, 0.07);
+  --line-strong: rgba(236, 236, 232, 0.18);
 
   /* Text */
-  --ink: #26282a;           /* graphite ink */
-  --muted: #565b58;         /* slate */
-  --faint: #878b85;
-  --ghost: #b3b5ad;
+  --ink: #ecece8;           /* silver */
+  --muted: #a8a8a2;         /* stone */
+  --faint: #7a7a76;
+  --ghost: #5c5c58;
 
   /* Typography System */
   --font-hero: "Syne", "Inter", system-ui, sans-serif;
@@ -68,11 +68,11 @@ body::after {
   inset: 0;
   z-index: 2000;
   pointer-events: none;
-  opacity: 0.028;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-::selection { background: var(--olive); color: #faf8f1; }
+::selection { background: var(--olive); color: #0e0e10; }
 
 a { color: inherit; text-decoration: none; }
 img, svg { display: block; max-width: 100%; }
@@ -85,6 +85,8 @@ button { font: inherit; cursor: pointer; background: none; border: none; color: 
 }
 
 section[id] { scroll-margin-top: calc(var(--nav-h) + 8px); }
+
+main { position: relative; z-index: 1; }
 
 /* ---------- layout — open, airy ---------- */
 
@@ -144,9 +146,9 @@ h1, h2, h3, h4 {
 }
 .sec-head .name {
   font-family: var(--font-hero);
-  font-weight: 800;
-  font-size: clamp(22px, 2.8vw, 30px);
-  letter-spacing: 0.06em;
+  font-weight: 600;
+  font-size: clamp(20px, 2.4vw, 26px);
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
@@ -159,20 +161,26 @@ h1, h2, h3, h4 {
 }
 .sec-lede strong { color: var(--ink); font-weight: 600; }
 
-/* ---------- panels — paper cards ---------- */
+/* ---------- panels — liquid glass, matte edge ---------- */
 
 .panel {
   position: relative;
   background: var(--bg-raised);
+  backdrop-filter: blur(22px) saturate(1.15);
+  -webkit-backdrop-filter: blur(22px) saturate(1.15);
   border: 1px solid var(--line-soft);
-  border-radius: 6px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 1px 0 rgba(46, 50, 54, 0.04), 0 16px 36px -28px rgba(46, 50, 54, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 18px 48px -28px rgba(0, 0, 0, 0.7);
   transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
 }
 .panel:hover {
   border-color: var(--line);
-  box-shadow: 0 1px 0 rgba(46, 50, 54, 0.05), 0 22px 44px -28px rgba(46, 50, 54, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 24px 56px -24px rgba(0, 0, 0, 0.8);
 }
 
 /* scanline overlay — much fainter on paper */
@@ -203,8 +211,8 @@ h1, h2, h3, h4 {
   border: 1px solid var(--line-strong);
   border-radius: 4px;
   color: var(--ink);
-  background: linear-gradient(to bottom, var(--bg-raised), var(--layer-elevated));
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 3px 8px -4px rgba(46, 50, 54, 0.3);
+  background: linear-gradient(to bottom, rgba(36, 36, 40, 0.9), rgba(18, 18, 20, 0.95));
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08) inset, 0 8px 18px -10px rgba(0, 0, 0, 0.7);
   transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
     transform 0.15s ease, background 0.25s ease;
   overflow: hidden;
@@ -224,7 +232,7 @@ h1, h2, h3, h4 {
 .btn:hover {
   border-color: var(--olive);
   color: var(--olive);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 6px 16px -8px rgba(91, 101, 80, 0.5);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1) inset, 0 8px 20px -10px rgba(163, 177, 138, 0.35);
 }
 .btn:active { transform: translateY(1px); }
 

@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import LivingBackground from "../components/LivingBackground.astro";
+import TopoLayer from "../components/TopoLayer.astro";
 
 interface Props {
   title?: string;
@@ -12,7 +12,7 @@ interface Props {
 const {
   title = "COSINE+ AUTONOMOUS — Systems, with a sine of life",
   description =
-    "COSINE+ AUTONOMOUS is an AI solutions company. Precision web design, recursive AiO websites that keep improving after launch, and governed custom AI architectures. GOVERNED. AUTONOMOUS. ALIVE.",
+    "COSINE+ AUTONOMOUS. Custom sites that warm a cold call. Recursive AiO that gets better every day. Agents in a paint of your data — not a jail with folders.",
 } = Astro.props;
 ---
 
@@ -28,16 +28,16 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#f2efe7" />
+    <meta name="theme-color" content="#0e0e10" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <LivingBackground />
+    <TopoLayer />
     <Nav />
     <main>
       <slot />

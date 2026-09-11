@@ -1,0 +1,47 @@
+---
+import TopoField from "./TopoField.astro";
+---
+
+<!-- Ground. The site sits on glass above this. It notices you slowly. -->
+<div id="topo-layer" aria-hidden="true">
+  <div class="topo-shift">
+    <TopoField seed={11} w={1600} h={1000} cols={96} rows={60} levels={8} opacity={0.22} indexOpacity={0.38} preserve="xMidYMid slice" />
+  </div>
+</div>
+
+<style>
+  #topo-layer {
+    position: fixed;
+    inset: -8%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .topo-shift {
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+</style>
+
+<script>
+  const layer = document.querySelector(".topo-shift") as HTMLElement | null;
+  if (layer && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    let mx = 0, my = 0, tx = 0, ty = 0;
+    window.addEventListener("pointermove", (e) => {
+      const cx = window.innerWidth / 2;
+      const cy = window.innerHeight / 2;
+      tx = ((e.clientX - cx) / cx) * 18;
+      ty = ((e.clientY - cy) / cy) * 12;
+    }, { passive: true });
+
+    const tick = () => {
+      mx += (tx - mx) * 0.03;
+      my += (ty - my) * 0.03;
+      layer.style.transform = `translate3d(${mx.toFixed(2)}px, ${my.toFixed(2)}px, 0)`;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+</script>

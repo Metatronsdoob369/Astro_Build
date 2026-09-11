@@ -66,13 +66,13 @@
 
           if (glow > 0.3) {
             const g = Math.min(1, (glow - 0.3) / 0.7);
-            ctx!.fillStyle = `rgba(91,101,80,${Math.min(0.55, o * 0.6)})`;
+            ctx!.fillStyle = `rgba(163,177,138,${Math.min(0.55, o * 0.6)})`;
             const r = 1.2 + g * 1.6;
             ctx!.beginPath();
             ctx!.arc(px, py, r, 0, Math.PI * 2);
             ctx!.fill();
           } else {
-            ctx!.fillStyle = `rgba(46,50,54,${o * 0.45})`;
+            ctx!.fillStyle = `rgba(200,200,206,${o * 0.28})`;
             ctx!.fillRect(px - 0.75, py - 0.75, 1.5, 1.5);
           }
         }
