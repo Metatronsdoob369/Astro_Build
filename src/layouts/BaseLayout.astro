@@ -14,6 +14,16 @@ const {
   description =
     "COSINE+ AUTONOMOUS. Custom sites that warm a cold call. Recursive AiO that gets better every day. Agents in a paint of your data — not a jail with folders.",
 } = Astro.props;
+
+// Signal audit pack. Rendered only when a public Signal origin and this site's embed key are
+// set at build time (PUBLIC_SIGNAL_ORIGIN, PUBLIC_SIGNAL_KEY); the production build carries
+// nothing until Signal has a public https origin.
+const signalOrigin = import.meta.env.PUBLIC_SIGNAL_ORIGIN;
+const signalKey = import.meta.env.PUBLIC_SIGNAL_KEY;
+const signalSrc =
+  signalOrigin && signalKey
+    ? `${String(signalOrigin).replace(/\/$/, "")}/api/pack?key=${encodeURIComponent(String(signalKey))}`
+    : null;
 ---
 
 <!doctype html>
@@ -35,6 +45,7 @@ const {
       href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    {signalSrc && <script is:inline defer src={signalSrc}></script>}
   </head>
   <body>
     <TopoLayer />

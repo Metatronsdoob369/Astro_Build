@@ -1,0 +1,33 @@
+# COSINE+ AUTONOMOUS
+
+> Systems, with a sine of life. Web design, Recursive AiO websites, and custom AI solutions from Birmingham, Alabama, operating everywhere.
+
+COSINE+ AUTONOMOUS builds three deployment classes under one philosophy, governed autonomy: machines do the repeating, humans hold the kill-switch, and everything ships with an audit trail. This site is a single page; the links below are anchors on it.
+
+## Systems
+
+- [Web Design](https://cosineautonomous.com/#systems): Deterministic frontends engineered like backends. Sub-second loads, accessible by default, hand-tuned typography. Astro and edge-static builds, design systems, headless CMS, Core Web Vitals.
+- [Recursive AiO Websites](https://cosineautonomous.com/#systems): The all-in-one website with a governor. Site, CMS, CRM, analytics, and an embedded AI layer wired into one closed loop that observes how visitors use it, drafts improvements, ships them behind flags, and learns from every human-approved delta.
+- [Custom AI Solutions](https://cosineautonomous.com/#systems): MCP stacks, autonomous workflows (n8n, Python, LLM reasoning), redteam tooling, and synthetic media pipelines, governed under strict parameters.
+
+## The Loop
+
+- [Recursion](https://cosineautonomous.com/#recursion): Sense (telemetry on every session), Model (which copy, layout, and flow each visitor pattern responds to), Refine (draft the delta), Serve (ship behind flags, a human approves, the loop learns, repeat). Full audit trail on every change, kill-switch on every node, weekly human-readable delta reports, no dark patterns.
+
+## Engagement Protocol
+
+- [Protocol](https://cosineautonomous.com/#protocol): Scope (one week of discovery against your actual stack, ending in a fixed quote and a written scope), Prototype (working software in 14 days on real data behind a flag), Ship (production deployment, monitored and documented), Recurse (post-launch, the loop keeps running and deltas compound weekly).
+
+## Work
+
+- [Design Dept.](https://cosineautonomous.com/#design): Proof of craft. Every site shipped carries a spec card.
+- [External Nodes](https://cosineautonomous.com/#nodes): Gallery of deployed client systems: OMS inventory and scouter, drug expiry system, web performance auditor, redteam opsec suite, UE5 autonomous generation.
+
+## Contact
+
+- [Transmit](https://cosineautonomous.com/#transmit): preston@cosineautonomous.com. Scoped in one week at a fixed quote.
+
+## Optional
+
+- [Sitemap](https://cosineautonomous.com/sitemap.xml)
+- [robots.txt](https://cosineautonomous.com/robots.txt)
