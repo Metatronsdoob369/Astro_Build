@@ -1,0 +1,270 @@
+---
+/**
+ * HeroStage — the ground behind the glass, as a slot.
+ *
+ * Mode "world": a Gaussian-splat world (.spz, Marble export) rendered with
+ * Spark + three. Scroll progress of the page is the playhead along an
+ * authored camera path (Catmull-Rom through `path` stations). The page's
+ * scroll that lifts the cards is the same scroll that flies the camera.
+ *
+ * Rules honoured: presence lights it, scroll drives it, nothing loops on its
+ * own. Under prefers-reduced-motion the camera holds at station 0 unless the
+ * URL carries `?motion` (review override, same idea as `?still`). No WebGL2,
+ * or a failed load → the stage removes itself and the topo ground shows.
+ *
+ * Coordinates: `path` is authored in displayed metres, ground at y = 0.
+ * `groundOffset` shifts the raw splat so its ground sits on y = 0; `flipY`
+ * is the 180° X flip most raw Marble exports need (the placeholder does not).
+ */
+interface Station {
+  pos: [number, number, number];
+  look: [number, number, number];
+}
+interface Props {
+  src: string;
+  flipY?: boolean;
+  groundOffset?: number;
+  scale?: number;
+  fov?: number;
+  path?: Station[];
+  maxDpr?: number;
+}
+const {
+  src,
+  flipY = false,
+  groundOffset = 0,
+  scale = 1,
+  fov = 40,
+  maxDpr = 1,
+  path = [
+    { pos: [0, 1.7, 0], look: [2, 3.5, -47] },
+    { pos: [-5, 4.5, -9], look: [2, 4, -47] },
+    { pos: [-11, 9, -21], look: [2, 3, -47] },
+    { pos: [-7, 15, -34], look: [5, 1, -50] },
+  ],
+} = Astro.props;
+---
+
+<div
+  class="stage"
+  data-src={src}
+  data-flip={flipY ? "1" : "0"}
+  data-ground={String(groundOffset)}
+  data-scale={String(scale)}
+  data-fov={String(fov)}
+  data-max-dpr={String(maxDpr)}
+  data-path={JSON.stringify(path)}
+  data-progress="0"
+  aria-hidden="true"
+>
+  <canvas class="stage-canvas"></canvas>
+  <div class="stage-veil"></div>
+</div>
+
+<style>
+  .stage {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--bg);
+  }
+  .stage-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.8s ease;
+    filter: saturate(0.3) brightness(0.52) contrast(1.06);
+  }
+  .stage.ready .stage-canvas {
+    opacity: 1;
+  }
+  /* Charcoal veil: the world stays a ground, the glass stays a card. */
+  .stage-veil {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 42%, transparent 20%, rgba(14, 14, 16, 0.55) 100%),
+      linear-gradient(180deg, rgba(14, 14, 16, 0.66), rgba(14, 14, 16, 0.28) 46%, rgba(14, 14, 16, 0.8));
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stage-canvas {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import * as THREE from "three";
+  import { SparkRenderer, SplatMesh } from "@sparkjsdev/spark";
+
+  type Station = { pos: [number, number, number]; look: [number, number, number] };
+
+  const stage = document.querySelector<HTMLElement>(".stage");
+  const canvas = stage?.querySelector<HTMLCanvasElement>(".stage-canvas");
+
+  const retire = () => stage?.remove();
+
+  const probe = document.createElement("canvas").getContext("webgl2");
+  if (!stage || !canvas || !probe) {
+    retire();
+  } else {
+    const src = stage.dataset.src ?? "";
+    const flipY = stage.dataset.flip === "1";
+    const ground = Number(stage.dataset.ground ?? 0);
+    const worldScale = Number(stage.dataset.scale ?? 1);
+    const fov = Number(stage.dataset.fov ?? 40);
+    const maxDpr = Number(stage.dataset.maxDpr ?? 1);
+    const stations = JSON.parse(stage.dataset.path ?? "[]") as Station[];
+
+    const params = new URLSearchParams(location.search);
+    const reduced =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches && !params.has("motion");
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: false,
+      alpha: false,
+      powerPreference: "high-performance",
+    });
+    renderer.setClearColor(0x0e0e10, 1);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 4000);
+
+    const spark = new SparkRenderer({ renderer, enableLod: true });
+    scene.add(spark);
+
+    const rig = new THREE.Group();
+    rig.rotation.x = flipY ? Math.PI : 0;
+    rig.position.y = ground;
+    rig.scale.setScalar(worldScale);
+    scene.add(rig);
+
+    const splat = new SplatMesh({ url: src });
+    rig.add(splat);
+
+    const toV = (p: [number, number, number]) => new THREE.Vector3(p[0], p[1], p[2]);
+    const posCurve = new THREE.CatmullRomCurve3(stations.map((s) => toV(s.pos)), false, "centripetal");
+    const lookCurve = new THREE.CatmullRomCurve3(stations.map((s) => toV(s.look)), false, "centripetal");
+    const p = new THREE.Vector3();
+    const l = new THREE.Vector3();
+
+    const place = (t: number) => {
+      posCurve.getPointAt(t, p);
+      lookCurve.getPointAt(t, l);
+      camera.position.copy(p);
+      camera.lookAt(l);
+    };
+
+    const fit = () => {
+      const w = stage.clientWidth || window.innerWidth;
+      const h = stage.clientHeight || window.innerHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    };
+    fit();
+    window.addEventListener("resize", fit, { passive: true });
+
+    const scrollProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    };
+
+    let target = reduced ? 0 : scrollProgress();
+    let current = target;
+    let shown = -1;
+
+    let ready = false;
+    const init = (splat as unknown as { initialized?: Promise<unknown> }).initialized;
+    if (init && typeof init.then === "function") {
+      init.then(
+        () => {
+          ready = true;
+          stage.classList.add("ready");
+        },
+        (err: unknown) => {
+          console.warn("[HeroStage] world failed to load, topo ground stays", err);
+          retire();
+        },
+      );
+    } else {
+      ready = true;
+      stage.classList.add("ready");
+    }
+
+    // Render on demand: the camera only moves when the page scrolls, so the
+    // loop runs while the glide settles (plus a short window for Spark's LOD
+    // streaming to catch up) and then stops. Idle cost: nothing.
+    let raf = 0;
+    let running = false;
+    let settleUntil = 0;
+    const SETTLE_MS = 1400;
+
+    const frame = (now: number) => {
+      if (document.hidden) {
+        running = false;
+        return;
+      }
+      current += (target - current) * (reduced ? 1 : 0.07);
+      if (Math.abs(target - current) < 0.0005) current = target;
+      place(current);
+      renderer.render(scene, camera);
+      if (ready && Math.abs(current - shown) > 0.001) {
+        shown = current;
+        stage.dataset.progress = current.toFixed(3);
+      }
+      if (current !== target) settleUntil = now + SETTLE_MS;
+      if (now < settleUntil) {
+        raf = requestAnimationFrame(frame);
+      } else {
+        running = false;
+      }
+    };
+
+    const kick = () => {
+      settleUntil = performance.now() + SETTLE_MS;
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(frame);
+      }
+    };
+
+    if (!reduced) {
+      window.addEventListener(
+        "scroll",
+        () => {
+          target = scrollProgress();
+          kick();
+        },
+        { passive: true },
+      );
+    }
+    window.addEventListener("resize", kick, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+        running = false;
+      } else {
+        kick();
+      }
+    });
+
+    // Keep drawing while the world streams in; the ready flag flips the fade.
+    const warm = setInterval(kick, 800);
+    const armed = () => {
+      clearInterval(warm);
+      settleUntil = performance.now() + 4000;
+      kick();
+    };
+    if (init && typeof init.then === "function") init.then(armed, () => clearInterval(warm));
+    else armed();
+
+    place(current);
+    kick();
+  }
+</script>

@@ -1,0 +1,48 @@
+---
+// Sandbox route. Not linked from the site. Ships in the build like any page —
+// delete or gate before you want it gone.
+//
+// The ground behind the glass is a slot (HeroStage). Today it holds the
+// clubhouse Marble v0 export as a stand-in. Swapping the world is three steps,
+// not one: (1) drop the new .spz at public/worlds/ and point `src` at it;
+// raw Marble exports usually need flipY={true} and groundOffset = minus the
+// world's semantics_metadata.ground_plane_offset; (2) re-author the `path`
+// prop — the default four stations are in THIS world's metres and will fly
+// through nothing in another one (each station = camera position + look-at,
+// displayed metres, ground at y = 0); (3) review on a Reduce-Motion machine
+// with `?motion` in the URL, otherwise the camera holds still by design.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import HeroStage from "../../components/HeroStage.astro";
+import HeroTin from "../../components/HeroTin.astro";
+import WebDesign from "../../components/WebDesign.astro";
+import Services from "../../components/Services.astro";
+import TopoBand from "../../components/TopoBand.astro";
+import Loop from "../../components/Loop.astro";
+import CaseStudies from "../../components/CaseStudies.astro";
+import Process from "../../components/Process.astro";
+import Contact from "../../components/Contact.astro";
+---
+
+<BaseLayout title="Hero sandbox — tin glass" description="Hero sandbox. Tin glass with a note in it.">
+  <HeroStage src="/worlds/hero-placeholder.spz" flipY={false} groundOffset={1.7} />
+
+  <HeroTin />
+  <WebDesign />
+  <Services />
+  <TopoBand seed={21} kicker="[ SURVEY ROUTE — LEG 04 : THE LOOP ]" note="ELEV +412M" />
+  <Loop />
+  <CaseStudies />
+  <Process />
+  <TopoBand
+    seed={47}
+    kicker="[ FINAL APPROACH — LEG 07 : TRANSMIT ]"
+    note="HOLDING CLEARED"
+    waypoints={[
+      { x: 220, y: 200, label: "WP-01 · SAY HELLO", below: true },
+      { x: 720, y: 130, label: "WP-02 · SCOPE WEEK" },
+      { x: 1180, y: 200, label: "WP-03 · SHIP IT", live: true },
+    ]}
+    route="M220 200 C 400 200 540 130 720 130 S 1000 200 1180 200"
+  />
+  <Contact />
+</BaseLayout>

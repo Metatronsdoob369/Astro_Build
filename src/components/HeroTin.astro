@@ -1,0 +1,218 @@
+---
+// HeroTin — the hero as a larger business card: a piece of tin glass with a
+// note in it. Dark, desaturated, matte. One living thing: the sine.
+// Presence lights it. Scroll does not. Ember only on the ask.
+// Sandbox component — mounted on /sandbox/hero-tin, not on index.
+import SineOfLife from "./SineOfLife.astro";
+---
+
+<section class="hero-tin" id="core">
+  <div class="container hero-tin-inner">
+    <div class="card">
+      <div class="card-meta">
+        <span>[ 01 : CORE ]</span>
+        <span>COSINE+ AUTONOMOUS</span>
+      </div>
+
+      <div class="card-body">
+        <h1 class="card-h1">SYSTEMS</h1>
+        <div class="card-sine"><SineOfLife amplitude={0.5} period={8} plus /></div>
+        <h2 class="card-note">with a <em>SINE of LIFE.</em></h2>
+      </div>
+
+      <div class="card-foot">
+        <a href="mailto:preston@cosineautonomous.com">preston@cosineautonomous.com</a>
+        <span>SYSTEMS · AiO · AGENTS</span>
+      </div>
+    </div>
+
+    <p class="hero-sub">
+      The site that makes a cold call warm. Then a recursive AiO layer that
+      gets better every day. Then, when the stakes are high, agents that live
+      in a <strong>paint of your data</strong> — not a jail with folders.
+    </p>
+
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#transmit">Initialize a build</a>
+      <a class="btn" href="#nodes">View external nodes</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-tin {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-top: calc(var(--nav-h) + 28px);
+    padding-bottom: 90px;
+    overflow: hidden;
+  }
+  .hero-tin-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* the card — tin glass */
+  .card {
+    width: min(760px, 92vw);
+    aspect-ratio: 7 / 4;
+    padding: clamp(18px, 2.6vw, 30px) clamp(20px, 3.2vw, 38px);
+    border-radius: 14px;
+    background:
+      linear-gradient(160deg, rgba(132, 136, 140, 0.18) 0%, rgba(76, 80, 84, 0.14) 48%, rgba(118, 122, 126, 0.12) 100%),
+      linear-gradient(0deg, rgba(138, 134, 124, 0.06), rgba(138, 134, 124, 0.06)),
+      rgba(16, 16, 18, 0.46);
+    backdrop-filter: blur(18px) saturate(0.85);
+    -webkit-backdrop-filter: blur(18px) saturate(0.85);
+    border: 1px solid rgba(214, 216, 214, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.35),
+      0 28px 60px -34px rgba(0, 0, 0, 0.85);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 10px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* lacquer: one matted reflection along the top-left edge. Static. Nothing wet. */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(118deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.028) 26%, rgba(255, 255, 255, 0) 52%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card > * { position: relative; z-index: 1; }
+
+  .card-meta,
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .card-meta span,
+  .card-foot span { white-space: nowrap; }
+  .card-foot a {
+    color: var(--faint);
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: 0.06em;
+  }
+  .card-foot a:hover { color: var(--muted); }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    padding-block: 6px;
+  }
+
+  .card-h1 {
+    font-family: var(--font-hero);
+    font-size: clamp(36px, 6.4vw, 66px);
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-indent: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    background: linear-gradient(180deg, #f2f0ea 0%, #a8a8a2 58%, #8a867c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .card-sine {
+    width: min(520px, 86%);
+    height: clamp(34px, 5vw, 54px);
+  }
+  .card-sine :global(.sol) { height: 100%; }
+
+  .card-note {
+    font-family: var(--font-hero);
+    font-size: clamp(15px, 2.1vw, 21px);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .card-note em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .hero-tin.lit .card-note { opacity: 1; transform: none; }
+
+  .hero-sub {
+    margin-top: 30px;
+    max-width: 62ch;
+    color: var(--muted);
+    font-weight: 300;
+    font-size: clamp(15px, 1.7vw, 17px);
+  }
+  .hero-sub strong { color: var(--ink); font-weight: 500; }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .card { aspect-ratio: auto; }
+    .card-meta,
+    .card-foot { font-size: 9.5px; letter-spacing: 0.18em; }
+    .card-foot { flex-direction: column; gap: 4px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-note { opacity: 1 !important; transform: none !important; }
+  }
+</style>
+
+<script>
+  // Presence lights it. Scroll does not. Timer is the fallback so nobody meets a dead card.
+  // `?still` holds the dormant state for design review.
+  const hero = document.querySelector(".hero-tin");
+  const sine = hero?.querySelector(".sol");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const hold = new URLSearchParams(location.search).has("still");
+  let lit = false;
+  const ignite = () => {
+    if (lit || !hero) return;
+    lit = true;
+    hero.classList.add("lit");
+    sine?.classList.add("alive");
+  };
+  if (reduced) {
+    ignite();
+  } else if (!hold) {
+    window.addEventListener("pointermove", ignite, { once: true, passive: true });
+    window.addEventListener("pointerdown", ignite, { once: true, passive: true });
+    setTimeout(ignite, 2200);
+  }
+</script>
