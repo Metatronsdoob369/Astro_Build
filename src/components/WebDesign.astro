@@ -1,55 +1,7 @@
 ---
-// [ 02 : DESIGN DEPT. ] — proof of craft, bento-style.
-// Wide landscape cells so the product inside is actually presentable.
-const BASE = import.meta.env.BASE_URL;
-const builds = [
-  {
-    id: "drift",
-    img: BASE + "mockups/drift-coffee.jpg",
-    alt: "Drift & Ember — specialty coffee roastery website",
-    client: "DRIFT & EMBER",
-    url: "driftandember.com",
-    sector: "Specialty coffee roastery",
-    stat: "[ BUILD: 2025 | ASTRO + HEADLESS ]",
-    result: "+61% online orders in 90 days",
-    stack: ["Sub-second loads", "Headless CMS", "0 templates"],
-    span: "s4",
-    featured: true,
-  },
-  {
-    id: "meridian",
-    img: BASE + "mockups/meridian-arch.jpg",
-    alt: "Meridian A+D — architecture studio portfolio website",
-    client: "MERIDIAN A+D",
-    url: "meridianad.com",
-    sector: "Architecture studio",
-    stat: "[ BUILD: 2024 ]",
-    result: "Portfolio updates 3× faster, no developer",
-    span: "s2",
-  },
-  {
-    id: "sunbelt",
-    img: BASE + "mockups/sunbelt-field.jpg",
-    alt: "Sunbelt Field Services — HVAC & electrical contractor website",
-    client: "SUNBELT FIELD SERVICES",
-    url: "sunbeltfield.com",
-    sector: "HVAC & electrical contractor",
-    stat: "[ BUILD: 2025 ]",
-    result: "9-minute emergency intake, start to dispatch",
-    span: "s2",
-  },
-];
-
-const platform = {
-  img: BASE + "mockups/grid-dashboard.jpg",
-  alt: "Photorealistic dark telemetry dashboard with topographic map, charts and radar widget",
-  client: "NORDIC GRID",
-  url: "app.nordicgrid.io",
-  stat: "[ PLATFORM: TELEMETRY · NOT A WEBSITE ]",
-  result:
-    "When the client\u2019s problem isn\u2019t a website, we build the room the data lives in: topographic grid maps, live telemetry, forecast models, and operator alerts — engineered to be read at 3 a.m.",
-  stack: ["Realtime telemetry", "Forecast models", "Operator alerting", "DesignOps handoff"],
-};
+// [ 02 : DESIGN DEPT. ] — proof of craft, quiet.
+// This section is the pitch: no stock photos, no fictional clients.
+import TopoField from "./TopoField.astro";
 
 const swatches = [
   { name: "CHARCOAL", hex: "#0E0E10" },
@@ -72,55 +24,19 @@ const swatches = [
       door with — then the optimizer, then the paint of their data.
     </p>
 
-    <!-- ── the bento ── -->
-    <div class="bento">
-      {builds.map((b, i) => (
-        <article class:list={["panel", "cell", b.span, { featured: b.featured }]} data-reveal data-reveal-delay={String(Math.min(i, 2))}>
-          <div class="browser">
-            <div class="browser-bar">
-              <span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span class="b-url mono">{b.url}</span>
-              <span class="b-live mono"><span class="pulse-dot"></span> LIVE</span>
-            </div>
-            <div class="browser-view">
-              <img src={b.img} alt={b.alt} loading="lazy" width="1408" height="768" />
-            </div>
-          </div>
-
-          <div class="spec">
-            <div class="spec-top">
-              <h3 class="b-client">{b.client}</h3>
-              <span class="stat-chip">{b.stat}</span>
-            </div>
-            <p class="b-sector mono">{b.sector}</p>
-            <p class="b-result">{b.result}</p>
-            {b.stack && <ul class="tags"><li>{b.stack[0]}</li><li>{b.stack[1]}</li><li>{b.stack[2]}</li></ul>}
-          </div>
-        </article>
-      ))}
-
-      <!-- platform build — wide anchor cell -->
-      <article class="panel cell s4 platform" data-reveal>
-        <div class="platform-media">
-          <div class="browser-bar">
-            <span class="b-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="b-url mono">{platform.url}</span>
-            <span class="b-live mono"><span class="pulse-dot"></span> LIVE</span>
-          </div>
-          <div class="browser-view">
-            <img src={platform.img} alt={platform.alt} loading="lazy" width="1024" height="1024" />
-          </div>
-        </div>
-        <div class="platform-copy">
-          <h3 class="b-client">{platform.client}</h3>
-          <p class="b-sector mono">Utility-scale energy monitoring · custom AI solution</p>
-          <p class="b-result">{platform.result}</p>
-          <ul class="tags">
-            {platform.stack.map((s) => <li>{s}</li>)}
-          </ul>
-        </div>
-      </article>
-    </div>
+    <!-- ── quiet panel: site-as-proof, no props ── -->
+    <article class="panel quiet" data-reveal>
+      <div class="quiet-field">
+        <TopoField seed={9} w={1440} h={320} cols={72} rows={28} levels={6} opacity={0.18} indexOpacity={0.36} preserve="xMidYMid slice" />
+      </div>
+      <div class="quiet-copy">
+        <h3 class="quiet-title">No props. No templates.</h3>
+        <p class="quiet-lede mono">
+          This site is the proof — system, typography, and rhythm.
+          No stock photos. No fictional clients.
+        </p>
+      </div>
+    </article>
 
     <!-- the system itself, on display -->
     <div class="panel specimen" data-reveal>
@@ -224,6 +140,26 @@ const swatches = [
     transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
   .cell:hover .browser-view img { transform: scale(1.035); }
+
+  /* ── quiet panel ── */
+  .quiet {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: clamp(28px, 3.5vw, 44px);
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--layer);
+  }
+  .quiet-field { width: 100%; height: auto; background: var(--bg); }
+  .quiet-copy { padding: clamp(16px, 2.2vw, 24px); display: grid; gap: 8px; }
+  .quiet-title {
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+  .quiet-lede { color: var(--muted); font-size: 13.5px; }
 
   /* spec strip — compact, horizontal */
   .spec {
