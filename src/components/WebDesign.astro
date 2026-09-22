@@ -1,10 +1,11 @@
 ---
 // [ 02 : DESIGN DEPT. ] — proof of craft, bento-style.
 // Wide landscape cells so the product inside is actually presentable.
+const BASE = import.meta.env.BASE_URL;
 const builds = [
   {
     id: "drift",
-    img: "/mockups/drift-coffee.jpg",
+    img: BASE + "mockups/drift-coffee.jpg",
     alt: "Drift & Ember — specialty coffee roastery website",
     client: "DRIFT & EMBER",
     url: "driftandember.com",
@@ -17,7 +18,7 @@ const builds = [
   },
   {
     id: "meridian",
-    img: "/mockups/meridian-arch.jpg",
+    img: BASE + "mockups/meridian-arch.jpg",
     alt: "Meridian A+D — architecture studio portfolio website",
     client: "MERIDIAN A+D",
     url: "meridianad.com",
@@ -28,7 +29,7 @@ const builds = [
   },
   {
     id: "sunbelt",
-    img: "/mockups/sunbelt-field.jpg",
+    img: BASE + "mockups/sunbelt-field.jpg",
     alt: "Sunbelt Field Services — HVAC & electrical contractor website",
     client: "SUNBELT FIELD SERVICES",
     url: "sunbeltfield.com",
@@ -40,7 +41,7 @@ const builds = [
 ];
 
 const platform = {
-  img: "/mockups/grid-dashboard.jpg",
+  img: BASE + "mockups/grid-dashboard.jpg",
   alt: "Photorealistic dark telemetry dashboard with topographic map, charts and radar widget",
   client: "NORDIC GRID",
   url: "app.nordicgrid.io",
