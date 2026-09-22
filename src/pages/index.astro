@@ -12,7 +12,7 @@ import Contact from "../components/Contact.astro";
 ---
 
 <BaseLayout>
-  <HeroStage src="/worlds/hero-placeholder.spz" flipY={false} groundOffset={1.7} />
+  <HeroStage src={`${import.meta.env.BASE_URL}worlds/hero-placeholder.spz`} flipY={false} groundOffset={1.7} />
   <!-- 01 / CORE — the cold open: SYSTEMS + dormant chip -->
   <Hero />
 

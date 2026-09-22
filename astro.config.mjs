@@ -3,7 +3,9 @@ import { defineConfig } from "astro/config";
 
 // COSINE+ AUTONOMOUS — Astro build
 export default defineConfig({
-  site: "https://cosineautonomous.com",
+  // GitHub Pages (project pages) base + site
+  site: "https://metatronsdoob369.github.io",
+  base: "/Astro_Build/",
   server: {
     host: true,
     port: 4321,
