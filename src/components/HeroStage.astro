@@ -102,174 +102,241 @@ const {
 </style>
 
 <script>
-  import * as THREE from "three";
-  import { SparkRenderer, SplatMesh } from "@sparkjsdev/spark";
+  // Bootstrap-only client script with fail-open + resilient dynamic imports.
+  (() => {
+    const stage = document.querySelector(".stage");
+    const canvas = stage?.querySelector(".stage-canvas");
+    const retire = () => stage?.remove();
 
-  type Station = { pos: [number, number, number]; look: [number, number, number] };
+    // Hard rejections: missing DOM or no WebGL2 support.
+    const probe = document.createElement("canvas").getContext("webgl2");
+    if (!stage || !canvas || !probe) {
+      retire();
+      return;
+    }
 
-  const stage = document.querySelector<HTMLElement>(".stage");
-  const canvas = stage?.querySelector<HTMLCanvasElement>(".stage-canvas");
-
-  const retire = () => stage?.remove();
-
-  const probe = document.createElement("canvas").getContext("webgl2");
-  if (!stage || !canvas || !probe) {
-    retire();
-  } else {
-    const src = stage.dataset.src ?? "";
-    const flipY = stage.dataset.flip === "1";
-    const ground = Number(stage.dataset.ground ?? 0);
-    const worldScale = Number(stage.dataset.scale ?? 1);
-    const fov = Number(stage.dataset.fov ?? 40);
-    const maxDpr = Number(stage.dataset.maxDpr ?? 1);
-    const stations = JSON.parse(stage.dataset.path ?? "[]") as Station[];
-
-    const params = new URLSearchParams(location.search);
-    const reduced =
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches && !params.has("motion");
-
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: false,
-      alpha: false,
-      powerPreference: "high-performance",
-    });
-    renderer.setClearColor(0x0e0e10, 1);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 4000);
-
-    const spark = new SparkRenderer({ renderer, enableLod: true });
-    scene.add(spark);
-
-    const rig = new THREE.Group();
-    rig.rotation.x = flipY ? Math.PI : 0;
-    rig.position.y = ground;
-    rig.scale.setScalar(worldScale);
-    scene.add(rig);
-
-    const splat = new SplatMesh({ url: src });
-    rig.add(splat);
-
-    const toV = (p: [number, number, number]) => new THREE.Vector3(p[0], p[1], p[2]);
-    const posCurve = new THREE.CatmullRomCurve3(stations.map((s) => toV(s.pos)), false, "centripetal");
-    const lookCurve = new THREE.CatmullRomCurve3(stations.map((s) => toV(s.look)), false, "centripetal");
-    const p = new THREE.Vector3();
-    const l = new THREE.Vector3();
-
-    const place = (t: number) => {
-      posCurve.getPointAt(t, p);
-      lookCurve.getPointAt(t, l);
-      camera.position.copy(p);
-      camera.lookAt(l);
-    };
-
-    const fit = () => {
-      const w = stage.clientWidth || window.innerWidth;
-      const h = stage.clientHeight || window.innerHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    };
-    fit();
-    window.addEventListener("resize", fit, { passive: true });
-
-    const scrollProgress = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      return max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-    };
-
-    let target = reduced ? 0 : scrollProgress();
-    let current = target;
-    let shown = -1;
-
+    // Short watchdog so visitors never sit on charcoal forever if modules fail to load.
     let ready = false;
-    const init = (splat as unknown as { initialized?: Promise<unknown> }).initialized;
-    if (init && typeof init.then === "function") {
-      init.then(
-        () => {
+    let started = false;
+    const MODULE_TIMEOUT_MS = 3000; // module fetch/parse
+    const READY_TIMEOUT_MS = 10000; // world bootstrap
+    const moduleTimeout = setTimeout(() => {
+      if (!started && !ready) {
+        console.warn("[HeroStage] runtime boot timeout — retiring stage");
+        retire();
+      }
+    }, MODULE_TIMEOUT_MS);
+    const readyTimeout = setTimeout(() => {
+      if (!ready) {
+        console.warn("[HeroStage] world not ready — retiring stage");
+        retire();
+      }
+    }, READY_TIMEOUT_MS);
+
+    const importWithRetry = async (spec, attempts = 2, backoffMs = 500) => {
+      let lastErr;
+      for (let i = 0; i < attempts; i++) {
+        try {
+          // @ts-ignore - dynamic import in runtime
+          return await import(spec);
+        } catch (err) {
+          lastErr = err;
+          await new Promise((r) => setTimeout(r, backoffMs * (i + 1)));
+        }
+      }
+      throw lastErr;
+    };
+
+    const boot = async () => {
+      try {
+        const src = stage.dataset.src ?? "";
+        const flipY = stage.dataset.flip === "1";
+        const ground = Number(stage.dataset.ground ?? 0);
+        const worldScale = Number(stage.dataset.scale ?? 1);
+        const fov = Number(stage.dataset.fov ?? 40);
+        const maxDpr = Number(stage.dataset.maxDpr ?? 1);
+        const stations = JSON.parse(stage.dataset.path ?? "[]");
+
+        const params = new URLSearchParams(location.search);
+        const reduced =
+          window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+          !params.has("motion");
+
+        // Load heavy modules only now.
+        const THREE = await importWithRetry("three", 2);
+        const { SparkRenderer, SplatMesh } = await importWithRetry(
+          "@sparkjsdev/spark",
+          2
+        );
+        started = true;
+        clearTimeout(moduleTimeout);
+
+        const renderer = new THREE.WebGLRenderer({
+          canvas,
+          antialias: false,
+          alpha: false,
+          powerPreference: "high-performance",
+        });
+        renderer.setClearColor(0x0e0e10, 1);
+        renderer.setPixelRatio(
+          Math.min(window.devicePixelRatio || 1, maxDpr)
+        );
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(fov, 1, 0.1, 4000);
+
+        const spark = new SparkRenderer({ renderer, enableLod: true });
+        scene.add(spark);
+
+        const rig = new THREE.Group();
+        rig.rotation.x = flipY ? Math.PI : 0;
+        rig.position.y = ground;
+        rig.scale.setScalar(worldScale);
+        scene.add(rig);
+
+        const splat = new SplatMesh({ url: src });
+        rig.add(splat);
+
+        const toV = (p) => new THREE.Vector3(p[0], p[1], p[2]);
+        const posCurve = new THREE.CatmullRomCurve3(
+          stations.map((s) => toV(s.pos)),
+          false,
+          "centripetal"
+        );
+        const lookCurve = new THREE.CatmullRomCurve3(
+          stations.map((s) => toV(s.look)),
+          false,
+          "centripetal"
+        );
+        const p = new THREE.Vector3();
+        const l = new THREE.Vector3();
+
+        const place = (t) => {
+          posCurve.getPointAt(t, p);
+          lookCurve.getPointAt(t, l);
+          camera.position.copy(p);
+          camera.lookAt(l);
+        };
+
+        const fit = () => {
+          const w = stage.clientWidth || window.innerWidth;
+          const h = stage.clientHeight || window.innerHeight;
+          renderer.setSize(w, h, false);
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+        };
+        fit();
+        window.addEventListener("resize", fit, { passive: true });
+
+        const scrollProgress = () => {
+          const max =
+            document.documentElement.scrollHeight - window.innerHeight;
+          return max > 0
+            ? Math.min(1, Math.max(0, window.scrollY / max))
+            : 0;
+        };
+
+        let target = reduced ? 0 : scrollProgress();
+        let current = target;
+        let shown = -1;
+
+        const init = splat?.initialized;
+        if (init && typeof init.then === "function") {
+          init.then(
+            () => {
+              ready = true;
+              stage.classList.add("ready");
+              clearTimeout(readyTimeout);
+            },
+            (err) => {
+              console.warn(
+                "[HeroStage] world failed to load, topo ground stays",
+                err
+              );
+              retire();
+            }
+          );
+        } else {
           ready = true;
           stage.classList.add("ready");
-        },
-        (err: unknown) => {
-          console.warn("[HeroStage] world failed to load, topo ground stays", err);
-          retire();
-        },
-      );
-    } else {
-      ready = true;
-      stage.classList.add("ready");
-    }
+          clearTimeout(readyTimeout);
+        }
 
-    // Render on demand: the camera only moves when the page scrolls, so the
-    // loop runs while the glide settles (plus a short window for Spark's LOD
-    // streaming to catch up) and then stops. Idle cost: nothing.
-    let raf = 0;
-    let running = false;
-    let settleUntil = 0;
-    const SETTLE_MS = 1400;
+        // Render on demand.
+        let raf = 0;
+        let running = false;
+        let settleUntil = 0;
+        const SETTLE_MS = 1400;
 
-    const frame = (now: number) => {
-      if (document.hidden) {
-        running = false;
-        return;
-      }
-      current += (target - current) * (reduced ? 1 : 0.07);
-      if (Math.abs(target - current) < 0.0005) current = target;
-      place(current);
-      renderer.render(scene, camera);
-      if (ready && Math.abs(current - shown) > 0.001) {
-        shown = current;
-        stage.dataset.progress = current.toFixed(3);
-      }
-      if (current !== target) settleUntil = now + SETTLE_MS;
-      if (now < settleUntil) {
-        raf = requestAnimationFrame(frame);
-      } else {
-        running = false;
-      }
-    };
+        const frame = (now) => {
+          if (document.hidden) {
+            running = false;
+            return;
+          }
+          current += (target - current) * (reduced ? 1 : 0.07);
+          if (Math.abs(target - current) < 0.0005) current = target;
+          place(current);
+          renderer.render(scene, camera);
+          if (ready && Math.abs(current - shown) > 0.001) {
+            shown = current;
+            stage.dataset.progress = current.toFixed(3);
+          }
+          if (current !== target) settleUntil = now + SETTLE_MS;
+          if (now < settleUntil) {
+            raf = requestAnimationFrame(frame);
+          } else {
+            running = false;
+          }
+        };
 
-    const kick = () => {
-      settleUntil = performance.now() + SETTLE_MS;
-      if (!running) {
-        running = true;
-        raf = requestAnimationFrame(frame);
-      }
-    };
+        const kick = () => {
+          settleUntil = performance.now() + SETTLE_MS;
+          if (!running) {
+            running = true;
+            raf = requestAnimationFrame(frame);
+          }
+        };
 
-    if (!reduced) {
-      window.addEventListener(
-        "scroll",
-        () => {
-          target = scrollProgress();
+        if (!reduced) {
+          window.addEventListener(
+            "scroll",
+            () => {
+              target = scrollProgress();
+              kick();
+            },
+            { passive: true }
+          );
+        }
+        window.addEventListener("resize", kick, { passive: true });
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            cancelAnimationFrame(raf);
+            running = false;
+          } else {
+            kick();
+          }
+        });
+
+        // Keep drawing while the world streams in; the ready flag flips the fade.
+        const warm = setInterval(kick, 800);
+        const armed = () => {
+          clearInterval(warm);
+          settleUntil = performance.now() + 4000;
           kick();
-        },
-        { passive: true },
-      );
-    }
-    window.addEventListener("resize", kick, { passive: true });
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        cancelAnimationFrame(raf);
-        running = false;
-      } else {
+        };
+        if (init && typeof init.then === "function")
+          init.then(armed, () => clearInterval(warm));
+        else armed();
+
+        place(current);
         kick();
+      } catch (err) {
+        console.warn("[HeroStage] runtime import/boot failed — retiring stage", err);
+        retire();
       }
-    });
-
-    // Keep drawing while the world streams in; the ready flag flips the fade.
-    const warm = setInterval(kick, 800);
-    const armed = () => {
-      clearInterval(warm);
-      settleUntil = performance.now() + 4000;
-      kick();
     };
-    if (init && typeof init.then === "function") init.then(armed, () => clearInterval(warm));
-    else armed();
 
-    place(current);
-    kick();
-  }
+    // Start boot process
+    boot();
+  })();
 </script>
