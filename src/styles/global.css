@@ -238,7 +238,7 @@ h1, h2, h3, h4 {
 
 .btn:focus-visible {
   /* Strong, high-contrast halo that reads over both glass and moving topo */
-  outline: none;
+  outline: 2px solid transparent;
   box-shadow:
     0 0 0 3px var(--bg),
     0 0 0 6px var(--olive),
